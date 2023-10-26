@@ -1,7 +1,8 @@
 /* Roulette app */
 /* Copyright ©2019 - 23 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
 
-static __attribute__((unused)) const char TAG[] = "Roulette";
+static __attribute__((unused))
+     const char TAG[] = "Roulette";
 
 #include "revk.h"
 #include "esp_sleep.h"
@@ -10,8 +11,16 @@ static __attribute__((unused)) const char TAG[] = "Roulette";
 #include <driver/uart.h>
 #include "led_strip.h"
 #include <esp_http_server.h>
+#include <math.h>
 
-static httpd_handle_t webserver = NULL;
+     static httpd_handle_t webserver = NULL;
+
+#define	BTN1	4
+#define	BTN2	5
+#define	PWR	6
+#define	RGB	7
+#define	LEDS	151
+#define	N	37
 
 #define	settings	\
 	b(webcontrol)	\
@@ -38,7 +47,7 @@ static httpd_handle_t webserver = NULL;
 #else
 #define led(n,a,d)      uint8_t n[a];
 #endif
-settings                        
+settings
 #undef led
 #undef io
 #undef u32
@@ -54,9 +63,7 @@ settings
 #undef u8l
 #undef b
 #undef s
-
-const char *
-app_callback (int client, const char *prefix, const char *target, const char *suffix, jo_t j)
+     const char *app_callback (int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp (prefix, prefixcommand))
       return NULL;              // Not for us or not a command from main MQTT
@@ -76,7 +83,30 @@ app_main ()
    }
 #endif
 
+   led_strip_handle_t strip = NULL;
+   led_strip_config_t strip_config = {
+      .strip_gpio_num = RGB,
+      .max_leds = LEDS,         // The number of LEDs in the strip,
+      .led_pixel_format = LED_PIXEL_FORMAT_GRB, // Pixel format of your LED strip
+      .led_model = LED_MODEL_WS2812,    // LED strip model
+   };
+   led_strip_rmt_config_t rmt_config = {
+      .clk_src = RMT_CLK_SRC_DEFAULT,   // different clock source can lead to different power consumption
+      .resolution_hz = 10 * 1000 * 1000,        // 10MHz
+      .flags.with_dma = true,
+   };
+   REVK_ERR_CHECK (led_strip_new_rmt_device (&strip_config, &rmt_config, &strip));
+   REVK_ERR_CHECK (led_strip_clear (strip));
 
+   for (unsigned int i = 0; i < LEDS; i++)
+      led_strip_set_pixel (strip, i, 63, 0, 0);
+
+   gpio_reset_pin (PWR);
+   gpio_set_level (PWR, 0);
+   gpio_set_direction (PWR, GPIO_MODE_OUTPUT);
+   usleep (100000);
+
+   REVK_ERR_CHECK (led_strip_refresh (strip));
 
    revk_boot (&app_callback);
 #ifndef CONFIG_REVK_BLINK
@@ -98,7 +128,7 @@ app_main ()
 #define s16r(n,d) revk_register(#n,0,sizeof(n),&n,#d,0); revk_register("ring"#n,0,sizeof(ring##n),&ring##n,#d,SETTING_SIGNED);
 #define u8l(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_LIVE);
 #define s(n,d) revk_register(#n,0,0,&n,#d,0);
-   settings                     
+   settings
 #undef io
 #undef u32
 #undef u32l
@@ -113,8 +143,7 @@ app_main ()
 #undef u8l
 #undef b
 #undef s
-
-   revk_start ();
+      revk_start ();
 
    if (webcontrol)
    {
@@ -131,5 +160,6 @@ app_main ()
       }
    }
 
-   while(1)sleep(1);
+   while (1)
+      sleep (1);
 }

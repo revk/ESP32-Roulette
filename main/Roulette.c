@@ -20,7 +20,24 @@ static __attribute__((unused))
 #define	PWR	6
 #define	RGB	7
 #define	LEDS	151
-#define	N	37
+
+RTC_NOINIT_ATTR uint8_t	n;	// Current number 0-(n-1) - remembered between runs
+				
+const uint8_t num[]={0,32,15,19,4,21,2,25,17,34,6,37,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26};
+#define	N	(2*sizeof(num)/sizeof(*num))
+
+const uint8_t digit[][7]={
+   {0x20, 0x50, 0x88, 0x88, 0x88, 0x50, 0x20},
+   {0x20, 0x60, 0x20, 0x20, 0x20, 0x20, 0x70},
+   {0x70, 0x88, 0x08, 0x30, 0x40, 0x80, 0xF8},
+   {0xF8, 0x08, 0x10, 0x30, 0x08, 0x88, 0x70},
+   {0x10, 0x30, 0x50, 0x90, 0xF8, 0x10, 0x10},
+   {0xF8, 0x80, 0xF0, 0x08, 0x08, 0x88, 0x70},
+   {0x30, 0x40, 0x80, 0xF0, 0x88, 0x88, 0x70},
+   {0xF8, 0x08, 0x10, 0x20, 0x40, 0x40, 0x40},
+   {0x70, 0x88, 0x88, 0x70, 0x88, 0x88, 0x70},
+   {0x70, 0x88, 0x88, 0x78, 0x08, 0x10, 0x60},
+};
 
 #define	settings	\
 	b(webcontrol)	\
@@ -33,11 +50,8 @@ static __attribute__((unused))
 #define s8(n,d) int8_t n;
 #define s8n(n,d) int8_t n[d];
 #define u8(n,d) uint8_t n;
-#define u8r(n,d) uint8_t n,ring##n;
+#define u8r(n,d) RTC_NOINIT_ATTR uint8_t n;
 #define u16(n,d) uint16_t n;
-#define u16r(n,d) uint16_t n,ring##n;
-#define s8r(n,d) int8_t n,ring##n;
-#define s16r(n,d) int16_t n,ring##n;
 #define u8l(n,d) uint8_t n;
 #define b(n) uint8_t n;
 #define s(n,d) char * n;
@@ -57,9 +71,7 @@ settings
 #undef u8
 #undef u8r
 #undef u16
-#undef u16r
 #undef s8r
-#undef s16r
 #undef u8l
 #undef b
 #undef s
@@ -83,6 +95,11 @@ app_main ()
    }
 #endif
 
+   gpio_reset_pin (PWR);
+   gpio_set_level (PWR, 0);
+   gpio_set_direction (PWR, GPIO_MODE_OUTPUT);
+   usleep (10000);
+
    led_strip_handle_t strip = NULL;
    led_strip_config_t strip_config = {
       .strip_gpio_num = RGB,
@@ -98,15 +115,41 @@ app_main ()
    REVK_ERR_CHECK (led_strip_new_rmt_device (&strip_config, &rmt_config, &strip));
    REVK_ERR_CHECK (led_strip_clear (strip));
 
-   for (unsigned int i = 0; i < LEDS; i++)
-      led_strip_set_pixel (strip, i, 63, 0, 0);
+   void show(uint8_t n)
+   {
+	   uint8_t r=0,g=0,b=0;
+	   if(n==1){g=127;r=127;} // 0-32
+	   else if(n==N-2){g=127;b=127;} //  26-0
+	   else if(n&1){b=127;r=127;} // red-blue
+	   else if(n&2)r=255;
+	   else b=255;
+	   for(int i=0;i<N;i++)led_strip_set_pixel(strip,i,r,g,b);
+	   if(n&1)for(int i=N;i<LEDS;i++)led_strip_set_pixel(strip,i,0,0,0); // Not on number;
+	   else
+	   { // Digits
 
-   gpio_reset_pin (PWR);
-   gpio_set_level (PWR, 0);
-   gpio_set_direction (PWR, GPIO_MODE_OUTPUT);
-   usleep (100000);
-
+	   }
    REVK_ERR_CHECK (led_strip_refresh (strip));
+   }
+
+   // Checking keys
+
+
+   // Run the wheel
+n%=N;
+uint8_t run=0;
+{ // Set target
+uint8_t target=255;
+while(target>=N)target=(esp_random()&0xFF); // Don't to ensure no bias
+					   run=N*4+target-n; 
+					    }
+
+while(run--)
+{
+	n=(n+1)%N;
+	show(n);
+	usleep(100000);
+}
 
    revk_boot (&app_callback);
 #ifndef CONFIG_REVK_BLINK
@@ -121,11 +164,8 @@ app_main ()
 #define s8(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_SIGNED);
 #define s8n(n,d) revk_register(#n,d,sizeof(*n),&n,NULL,SETTING_SIGNED);
 #define u8(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
-#define u8r(n,d) revk_register(#n,0,sizeof(n),&n,#d,0); revk_register("ring"#n,0,sizeof(ring##n),&ring##n,#d,0);
+#define u8r(n,d) u8(n,d)
 #define u16(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
-#define u16r(n,d) revk_register(#n,0,sizeof(n),&n,#d,0); revk_register("ring"#n,0,sizeof(ring##n),&ring##n,#d,0);
-#define s8r(n,d) revk_register(#n,0,sizeof(n),&n,#d,0); revk_register("ring"#n,0,sizeof(ring##n),&ring##n,#d,SETTING_SIGNED);
-#define s16r(n,d) revk_register(#n,0,sizeof(n),&n,#d,0); revk_register("ring"#n,0,sizeof(ring##n),&ring##n,#d,SETTING_SIGNED);
 #define u8l(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_LIVE);
 #define s(n,d) revk_register(#n,0,0,&n,#d,0);
    settings
@@ -137,9 +177,7 @@ app_main ()
 #undef u8
 #undef u8r
 #undef u16
-#undef u16r
 #undef s8r
-#undef s16r
 #undef u8l
 #undef b
 #undef s

@@ -5816,6 +5816,11 @@
     (uuid ffd1d7cf-b3be-429f-a73d-8fd84d5cff99)
   )
 
+  (text "B08HJ53Q3C" (at 150.495 189.865 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 7b7bf52d-05e0-400f-9c15-8018cc89c47b)
+  )
+
   (global_label "VLED" (shape input) (at 20.32 20.955 90) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 0146df0b-baf1-43c8-963e-5902817f20e5)

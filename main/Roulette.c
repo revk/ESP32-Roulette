@@ -9,6 +9,7 @@ static __attribute__((unused))
 #include "esp_task_wdt.h"
 #include <driver/gpio.h>
 #include <driver/uart.h>
+#include <driver/rtc_io.h>
 #include "led_strip.h"
 #include <esp_http_server.h>
 #include <math.h>
@@ -21,13 +22,17 @@ static __attribute__((unused))
 #define	RGB	7
 #define	LEDS	151
 
-RTC_NOINIT_ATTR uint8_t	n;	// Current number 0-(n-1) - remembered between runs
-				
-const uint8_t num[]={0,32,15,19,4,21,2,25,17,34,6,37,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26};
+     RTC_NOINIT_ATTR uint8_t n; // Current number 0-(n-1) - remembered between runs
+
+     const uint8_t num[] =
+        { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 37, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28,
+        12, 35, 3, 26
+     };
+
 #define	N	(2*sizeof(num)/sizeof(*num))
 
-const uint8_t digit[][7]={
-   {0x20, 0x50, 0x88, 0x88, 0x88, 0x50, 0x20},
+const uint8_t digit[][7] = {
+   {0x70, 0x88, 0x88, 0x88, 0x88, 0x88, 0x70},
    {0x20, 0x60, 0x20, 0x20, 0x20, 0x20, 0x70},
    {0x70, 0x88, 0x08, 0x30, 0x40, 0x80, 0xF8},
    {0xF8, 0x08, 0x10, 0x30, 0x08, 0x88, 0x70},
@@ -75,11 +80,30 @@ settings
 #undef u8l
 #undef b
 #undef s
-     const char *app_callback (int client, const char *prefix, const char *target, const char *suffix, jo_t j)
+const char *
+app_callback (int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp (prefix, prefixcommand))
       return NULL;              // Not for us or not a command from main MQTT
    return "Not known";
+}
+
+
+void
+night (void)
+{
+   gpio_set_level (PWR, 1);     // Power off LEDs
+   rtc_gpio_set_direction_in_sleep (BTN1, RTC_GPIO_MODE_INPUT_ONLY);
+   rtc_gpio_pullup_dis (BTN1);
+   rtc_gpio_pulldown_dis (BTN1);
+   rtc_gpio_set_direction_in_sleep (BTN2, RTC_GPIO_MODE_INPUT_ONLY);
+   rtc_gpio_pullup_dis (BTN2);
+   rtc_gpio_pulldown_dis (BTN2);
+   // TODO 
+   // Wait for button changes
+
+   esp_deep_sleep (10000LL);    // Restart now
+
 }
 
 void
@@ -98,6 +122,10 @@ app_main ()
    gpio_reset_pin (PWR);
    gpio_set_level (PWR, 0);
    gpio_set_direction (PWR, GPIO_MODE_OUTPUT);
+   gpio_reset_pin (BTN1);
+   gpio_set_direction (BTN1, GPIO_MODE_INPUT);
+   gpio_reset_pin (BTN2);
+   gpio_set_direction (BTN2, GPIO_MODE_INPUT);
    usleep (10000);
 
    led_strip_handle_t strip = NULL;
@@ -115,41 +143,92 @@ app_main ()
    REVK_ERR_CHECK (led_strip_new_rmt_device (&strip_config, &rmt_config, &strip));
    REVK_ERR_CHECK (led_strip_clear (strip));
 
-   void show(uint8_t n)
+   void show (uint8_t n)
    {
-	   uint8_t r=0,g=0,b=0;
-	   if(n==1){g=127;r=127;} // 0-32
-	   else if(n==N-2){g=127;b=127;} //  26-0
-	   else if(n&1){b=127;r=127;} // red-blue
-	   else if(n&2)r=255;
-	   else b=255;
-	   for(int i=0;i<N;i++)led_strip_set_pixel(strip,i,r,g,b);
-	   if(n&1)for(int i=N;i<LEDS;i++)led_strip_set_pixel(strip,i,0,0,0); // Not on number;
-	   else
-	   { // Digits
-
-	   }
-   REVK_ERR_CHECK (led_strip_refresh (strip));
+      uint8_t r = 0, g = 0, b = 0;
+      if (!n)
+         g = 255;               // 0
+      else if (n == 1)
+      {
+         g = 255 / 2;
+         r = 255 / 2;
+      }                         // 0-32
+      else if (n == N - 2)
+      {
+         g = 255 / 2;
+         b = 255 / 2;
+      }                         //  26-0
+      else if (n & 1)
+      {
+         b = 255 / 2;
+         r = 255 / 2;
+      }                         // red-blue
+      else if (n & 2)
+         r = 255;               // red
+      else
+         b = 255;               // blue
+      for (int i = 0; i < N; i++)
+         if (i == n)
+            led_strip_set_pixel (strip, i, r, g, b);
+         else
+            led_strip_set_pixel (strip, i, 0, 0, 0);
+      if (n & 1)
+         for (int i = N; i < LEDS; i++)
+            led_strip_set_pixel (strip, i, 0, 0, 0);    // Not on number;
+      else
+      {                         // Digits
+         uint8_t d = num[n / 2];
+         uint8_t p = N;
+         if (d < 10)
+            p += 7 * 3;
+         void add (uint8_t d)
+         {
+            for (int x = 0; x < 5; x++)
+               for (int y = 0; y < 7; y++)
+                  if (digit[d][y] & (0x80 >> x))
+                     led_strip_set_pixel (strip, p++, r / 3, g / 3, b / 3);
+                  else
+                     led_strip_set_pixel (strip, p++, 0, 0, 0);
+         }
+         if (d >= 10)
+         {
+            add (d / 10);
+            for (int y = 0; y < 7; y++)
+               led_strip_set_pixel (strip, p++, 0, 0, 0);
+         }
+         add (d % 10);
+      }
+      REVK_ERR_CHECK (led_strip_refresh (strip));
    }
 
-   // Checking keys
+   // Checking keys...
 
 
    // Run the wheel
-n%=N;
-uint8_t run=0;
-{ // Set target
-uint8_t target=255;
-while(target>=N)target=(esp_random()&0xFF); // Don't to ensure no bias
-					   run=N*4+target-n; 
-					    }
+   n %= N;
+   uint16_t run = 0;
+   {                            // Set target
+      uint8_t target = 255;
+      while (target >= N)
+         target = (esp_random () & 0xFF);       // Don't to ensure no bias
+      run = N * 3 + target - n;
+      if (esp_random () & 1)
+         run += N;
+   }
 
-while(run--)
-{
-	n=(n+1)%N;
-	show(n);
-	usleep(100000);
-}
+   while (run--)
+   {
+      n = (n + 1) % N;
+      show (n);
+#define	SLOW	12.43	//
+#define	FAST	 9.21	// 10ms
+      usleep (exp (SLOW - (SLOW-FAST) * run / 370));   // 370 should be max run, 
+   }
+   if (n & 1)
+   {                            // Rock on to digit
+      n = (n + ((esp_random () & 1) ? N - 1 : 1)) % N;
+      show (n);
+   }
 
    revk_boot (&app_callback);
 #ifndef CONFIG_REVK_BLINK
@@ -199,5 +278,9 @@ while(run--)
    }
 
    while (1)
-      sleep (1);
+   {
+      if (!gpio_get_level (BTN1) || !gpio_get_level (BTN2))
+         night ();
+      usleep (10000);
+   }
 }

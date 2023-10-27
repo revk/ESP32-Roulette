@@ -346,6 +346,7 @@ app_main ()
 
    if (n & 1)
    {                            // Rock on to digit
+      usleep (200000);
       n = (n + ((esp_random () & 1) ? N - 1 : 1)) % N;
       show (n);
    }

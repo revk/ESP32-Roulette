@@ -104,6 +104,8 @@ night (uint8_t p)
    if (doneinit)
       revk_pre_shutdown ();
    gpio_set_level (pwr, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));  // Power off LEDs
+   if (p)
+      rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
    rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
    rtc_gpio_pullup_dis (btn1 & IO_MASK);
    rtc_gpio_pulldown_dis (btn1 & IO_MASK);
@@ -181,7 +183,7 @@ app_main ()
    if (!btn1 || !btn2 || !pwr || !rgb || !wakeup || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT)
       init ();                  // Get values
 
-   ESP_LOGE (TAG, "Wake %d Reset %d BTN1 %X BTN2 %X PWR %X RGB %X", wakeup, reset, btn1, btn2, pwr, rgb);
+   //ESP_LOGE (TAG, "Wake %d Reset %d BTN1 %X BTN2 %X PWR %X RGB %X", wakeup, reset, btn1, btn2, pwr, rgb);
 
    gpio_reset_pin (btn1 & IO_MASK);
    gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
@@ -358,7 +360,10 @@ app_main ()
    {
       int p = revk_ota_progress ();
       if (p > 0 && p < 100)
+      {
          digits (p, 63, 63, 0);
+         REVK_ERR_CHECK (led_strip_refresh (strip));
+      }
       sleep (1);                // Wait
    }
 

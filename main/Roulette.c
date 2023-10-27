@@ -180,15 +180,16 @@ app_main ()
    esp_sleep_wakeup_cause_t wakeup = esp_sleep_get_wakeup_cause ();
    esp_reset_reason_t reset = esp_reset_reason ();
 
-   if (!btn1 || !btn2 || !pwr || !rgb || !wakeup || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT)
+   if (!btn1 || !btn2 || !pwr || !rgb || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT)
       init ();                  // Get values
-
-   //ESP_LOGE (TAG, "Wake %d Reset %d BTN1 %X BTN2 %X PWR %X RGB %X", wakeup, reset, btn1, btn2, pwr, rgb);
 
    gpio_reset_pin (btn1 & IO_MASK);
    gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
    gpio_reset_pin (btn2 & IO_MASK);
    gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
+
+   ESP_LOGE (TAG, "Wake %d Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", wakeup, reset, btn1, btn2, pwr, rgb,
+             btnpress (btn1), btnpress (btn2));
 
    if (!doneinit && !btnpress (btn1) && !btnpress (btn2))
       night (0);                // Off, and sleep

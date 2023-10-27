@@ -16,11 +16,6 @@ static __attribute__((unused))
 
      static httpd_handle_t webserver = NULL;
 
-#define	BTN1	4
-#define	BTN2	5
-#define	PWR	6
-#define	RGB	7
-#define	LEDS	151
 
      RTC_NOINIT_ATTR uint8_t n; // Current number 0-(n-1) - remembered between runs
 
@@ -30,6 +25,7 @@ static __attribute__((unused))
      };
 
 #define	N	(2*sizeof(num)/sizeof(*num))
+#define	LEDS	(N+7*11)
 
 const uint8_t digit[][7] = {
    {0x70, 0x88, 0x88, 0x88, 0x88, 0x88, 0x70},
@@ -46,6 +42,10 @@ const uint8_t digit[][7] = {
 
 #define	settings	\
 	b(webcontrol)	\
+	io(btn1,-4)	\
+	io(btn2,-5)	\
+	io(pwr,-6)	\
+	io(rgb,7)	\
 
 #define	IO_MASK	0x3F
 #define	IO_INV	0x40
@@ -60,7 +60,7 @@ const uint8_t digit[][7] = {
 #define u8l(n,d) uint8_t n;
 #define b(n) uint8_t n;
 #define s(n,d) char * n;
-#define io(n,d)           uint8_t n;
+#define io(n,d)           RTC_NOINIT_ATTR uint8_t n;
 #ifdef  CONFIG_REVK_BLINK
 #define led(n,a,d)      extern uint8_t n[a];
 #else
@@ -88,148 +88,57 @@ app_callback (int client, const char *prefix, const char *target, const char *su
    return "Not known";
 }
 
+static inline uint8_t
+btnpress (uint8_t b)
+{
+   if (!b)
+      return 0;
+   return (gpio_get_level (b & IO_MASK) ? 1 : 0) ^ (b & IO_INV ? 1 : 0);
+}
+
+static uint8_t doneinit = 0;
 
 void
-night (void)
+night (uint8_t p)
 {
-   gpio_set_level (PWR, 1);     // Power off LEDs
-   rtc_gpio_set_direction_in_sleep (BTN1, RTC_GPIO_MODE_INPUT_ONLY);
-   rtc_gpio_pullup_dis (BTN1);
-   rtc_gpio_pulldown_dis (BTN1);
-   rtc_gpio_set_direction_in_sleep (BTN2, RTC_GPIO_MODE_INPUT_ONLY);
-   rtc_gpio_pullup_dis (BTN2);
-   rtc_gpio_pulldown_dis (BTN2);
-   // TODO 
+   if (doneinit)
+      revk_pre_shutdown ();
+   gpio_set_level (pwr, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));  // Power off LEDs
+   rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
+   rtc_gpio_pullup_dis (btn1 & IO_MASK);
+   rtc_gpio_pulldown_dis (btn1 & IO_MASK);
+   rtc_gpio_set_direction_in_sleep (btn2 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
+   rtc_gpio_pullup_dis (btn2 & IO_MASK);
+   rtc_gpio_pulldown_dis (btn2 & IO_MASK);
    // Wait for button changes
-
-   esp_deep_sleep (10000LL);    // Restart now
-
+   uint64_t mask = 0;
+   if (btn1 & IO_INV)
+      mask |= (1LL << (btn1 & IO_MASK));
+   else if (btn2 & IO_INV)
+      mask |= (1LL << (btn2 & IO_MASK));
+   if (mask)
+      esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ALL_LOW);     // Press one button
+   else
+   {
+      if (btn1)
+         mask |= (1LL << (btn1 & IO_MASK));
+      if (btn2)
+         mask |= (1LL << (btn2 & IO_MASK));
+      esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ANY_HIGH);    // Press any button
+   }
+   // Go to sleep
+   if (p)
+      esp_deep_sleep (10000000LL);      // LEDs on, so timed wait
+   esp_deep_sleep (300000000LL);        // Sleep a while anyway
 }
 
 void
-app_main ()
+init (void)
 {
-#ifdef  CONFIG_IDF_TARGET_ESP32S3
-   {                            // All unused input pins pull down
-      gpio_config_t c = {.pull_down_en = 1,.mode = GPIO_MODE_DISABLE };
-      for (uint8_t p = 0; p <= 48; p++)
-         if (gpio_ok (p) & 2)
-            c.pin_bit_mask |= (1LL << p);
-      gpio_config (&c);
-   }
-#endif
-
-   gpio_reset_pin (PWR);
-   gpio_set_level (PWR, 0);
-   gpio_set_direction (PWR, GPIO_MODE_OUTPUT);
-   gpio_reset_pin (BTN1);
-   gpio_set_direction (BTN1, GPIO_MODE_INPUT);
-   gpio_reset_pin (BTN2);
-   gpio_set_direction (BTN2, GPIO_MODE_INPUT);
-   usleep (10000);
-
-   led_strip_handle_t strip = NULL;
-   led_strip_config_t strip_config = {
-      .strip_gpio_num = RGB,
-      .max_leds = LEDS,         // The number of LEDs in the strip,
-      .led_pixel_format = LED_PIXEL_FORMAT_GRB, // Pixel format of your LED strip
-      .led_model = LED_MODEL_WS2812,    // LED strip model
-   };
-   led_strip_rmt_config_t rmt_config = {
-      .clk_src = RMT_CLK_SRC_DEFAULT,   // different clock source can lead to different power consumption
-      .resolution_hz = 10 * 1000 * 1000,        // 10MHz
-      .flags.with_dma = true,
-   };
-   REVK_ERR_CHECK (led_strip_new_rmt_device (&strip_config, &rmt_config, &strip));
-   REVK_ERR_CHECK (led_strip_clear (strip));
-
-   void show (uint8_t n)
-   {
-      uint8_t r = 0, g = 0, b = 0;
-      if (!n)
-         g = 255;               // 0
-      else if (n == 1)
-      {
-         g = 255 / 2;
-         r = 255 / 2;
-      }                         // 0-32
-      else if (n == N - 2)
-      {
-         g = 255 / 2;
-         b = 255 / 2;
-      }                         //  26-0
-      else if (n & 1)
-      {
-         b = 255 / 2;
-         r = 255 / 2;
-      }                         // red-blue
-      else if (n & 2)
-         r = 255;               // red
-      else
-         b = 255;               // blue
-      for (int i = 0; i < N; i++)
-         if (i == n)
-            led_strip_set_pixel (strip, i, r, g, b);
-         else
-            led_strip_set_pixel (strip, i, 0, 0, 0);
-      if (n & 1)
-         for (int i = N; i < LEDS; i++)
-            led_strip_set_pixel (strip, i, 0, 0, 0);    // Not on number;
-      else
-      {                         // Digits
-         uint8_t d = num[n / 2];
-         uint8_t p = N;
-         if (d < 10)
-            p += 7 * 3;
-         void add (uint8_t d)
-         {
-            for (int x = 0; x < 5; x++)
-               for (int y = 0; y < 7; y++)
-                  if (digit[d][y] & (0x80 >> x))
-                     led_strip_set_pixel (strip, p++, r / 3, g / 3, b / 3);
-                  else
-                     led_strip_set_pixel (strip, p++, 0, 0, 0);
-         }
-         if (d >= 10)
-         {
-            add (d / 10);
-            for (int y = 0; y < 7; y++)
-               led_strip_set_pixel (strip, p++, 0, 0, 0);
-         }
-         add (d % 10);
-      }
-      REVK_ERR_CHECK (led_strip_refresh (strip));
-   }
-
-   // Checking keys...
-
-
-   // Run the wheel
-   n %= N;
-   uint16_t run = 0;
-   {                            // Set target
-      uint8_t target = 255;
-      while (target >= N)
-         target = (esp_random () & 0xFF);       // Don't to ensure no bias
-      run = N * 3 + target - n;
-      if (esp_random () & 1)
-         run += N;
-   }
-
-   while (run--)
-   {
-      n = (n + 1) % N;
-      show (n);
-#define	SLOW	12.43	//
-#define	FAST	 9.21	// 10ms
-      usleep (exp (SLOW - (SLOW-FAST) * run / 370));   // 370 should be max run, 
-   }
-   if (n & 1)
-   {                            // Rock on to digit
-      n = (n + ((esp_random () & 1) ? N - 1 : 1)) % N;
-      show (n);
-   }
-
+   if (doneinit)
+      return;
+   ESP_LOGE (TAG, "Start wifi/etc");
+   doneinit = 1;
    revk_boot (&app_callback);
 #ifndef CONFIG_REVK_BLINK
 #define led(n,a,d)      revk_register(#n,a,sizeof(*n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD|SETTING_FIX);
@@ -261,8 +170,176 @@ app_main ()
 #undef b
 #undef s
       revk_start ();
+}
 
-   if (webcontrol)
+void
+app_main ()
+{
+   esp_sleep_wakeup_cause_t wakeup = esp_sleep_get_wakeup_cause ();
+   esp_reset_reason_t reset = esp_reset_reason ();
+
+   if (!btn1 || !btn2 || !pwr || !rgb || !wakeup || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT)
+      init ();                  // Get values
+
+   ESP_LOGE (TAG, "Wake %d Reset %d BTN1 %X BTN2 %X PWR %X RGB %X", wakeup, reset, btn1, btn2, pwr, rgb);
+
+   gpio_reset_pin (btn1 & IO_MASK);
+   gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
+   gpio_reset_pin (btn2 & IO_MASK);
+   gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
+
+   if (!doneinit && !btnpress (btn1) && !btnpress (btn2))
+      night (0);                // Off, and sleep
+
+   {                            // All unused input pins pull down
+      gpio_config_t c = {.pull_down_en = 1,.mode = GPIO_MODE_DISABLE };
+      for (uint8_t p = 0; p <= 48; p++)
+         if (gpio_ok (p) & 2)
+            c.pin_bit_mask |= (1LL << p);
+      if (btn1)
+         c.pin_bit_mask &= ~(1LL << (btn1 & IO_MASK));
+      if (btn2)
+         c.pin_bit_mask &= ~(1LL << (btn2 & IO_MASK));
+      if (pwr)
+         c.pin_bit_mask &= ~(1LL << (pwr & IO_MASK));
+      if (rgb)
+         c.pin_bit_mask &= ~(1LL << (rgb & IO_MASK));
+      gpio_config (&c);
+   }
+
+   gpio_reset_pin (pwr & IO_MASK);
+   gpio_set_direction (pwr & IO_MASK, GPIO_MODE_OUTPUT);
+   gpio_set_level (pwr & IO_MASK, (pwr & IO_INV) ? 0 : 1);
+
+   led_strip_handle_t strip = NULL;
+   led_strip_config_t strip_config = {
+      .strip_gpio_num = rgb & IO_MASK,
+      .max_leds = LEDS,         // The number of LEDs in the strip,
+      .led_pixel_format = LED_PIXEL_FORMAT_GRB, // Pixel format of your LED strip
+      .led_model = LED_MODEL_WS2812,    // LED strip model
+   };
+   led_strip_rmt_config_t rmt_config = {
+      .clk_src = RMT_CLK_SRC_DEFAULT,   // different clock source can lead to different power consumption
+      .resolution_hz = 10 * 1000 * 1000,        // 10MHz
+      .flags.with_dma = true,
+   };
+   REVK_ERR_CHECK (led_strip_new_rmt_device (&strip_config, &rmt_config, &strip));
+   REVK_ERR_CHECK (led_strip_clear (strip));
+   usleep (10000);              // PWR on LEDs
+
+   void digits (int d, uint8_t r, uint8_t g, uint8_t b)
+   {                            // Digits
+      uint8_t p = N;
+      void skip (uint8_t w)
+      {
+         for (int x = 0; x < w; x++)
+            for (int y = 0; y < 7; y++)
+               led_strip_set_pixel (strip, p++, 0, 0, 0);
+      }
+      void add (uint8_t d)
+      {
+         for (int x = 0; x < 5; x++)
+            for (int y = 0; y < 7; y++)
+               if (digit[d][y] & (0x80 >> x))
+                  led_strip_set_pixel (strip, p++, r, g, b);
+               else
+                  led_strip_set_pixel (strip, p++, 0, 0, 0);
+      }
+      if (d >= 10)
+      {
+         add (d / 10);
+         skip (1);
+         add (d % 10);
+      } else
+      {
+         skip (3);
+         add (d);
+         skip (3);
+      }
+   }
+
+   void show (uint8_t n)
+   {
+      uint8_t r = 0,
+         g = 0,
+         b = 0;
+      if (!n)
+         g = 255;               // 0
+      else if (n == 1)
+      {
+         g = 255 / 2;
+         r = 255 / 2;
+      }                         // 0-32
+      else if (n == N - 2)
+      {
+         g = 255 / 2;
+         b = 255 / 2;
+      }                         //  26-0
+      else if (n & 1)
+      {
+         b = 255 / 2;
+         r = 255 / 2;
+      }                         // red-blue
+      else if (n & 2)
+         r = 255;               // red
+      else
+         b = 255;               // blue
+      for (int i = 0; i < N; i++)
+         if (i == n)
+            led_strip_set_pixel (strip, i, r, g, b);
+         else
+            led_strip_set_pixel (strip, i, 0, 0, 0);
+      if (n < N && !(n & 1))
+         digits (num[n / 2], r / 3, g / 3, b / 3);
+      REVK_ERR_CHECK (led_strip_refresh (strip));
+   }
+
+   show (n);
+
+   // Button release
+   while (btnpress (btn1) || btnpress (btn2))
+   {
+      usleep (10000);
+      if (btnpress (btn1) && btnpress (btn2))
+         init ();
+   }
+
+   // Run the wheel
+   n %= N;
+   uint16_t run = 0;
+   {                            // Set target
+      uint8_t target = 255;
+      while (target >= N)
+         target = (esp_random () & 0xFF);       // Don't to ensure no bias
+      run = N * 2 + target - n;
+      if (esp_random () & 1)
+         run += N;
+   }
+
+   uint8_t adj = esp_random () & 7;
+
+   while (run-- && !revk_shutting_down (NULL))
+   {
+      n = (n + 1) % N;
+      show (n);
+#define	SLOW	12.43           // log max time us
+#define	FAST	 8.52           // log min time us
+      usleep (exp (SLOW - (SLOW - FAST) * (run + adj) / 303));  // 303 should be max run, 
+   }
+
+   if (n & 1)
+   {                            // Rock on to digit
+      n = (n + ((esp_random () & 1) ? N - 1 : 1)) % N;
+      show (n);
+   }
+   usleep (200000);
+   for (int i = N; i < LEDS; i++)
+      led_strip_set_pixel (strip, i, n & 2 ? 64 : 0, !n ? 63 : 0, n && !(n & 2) ? 64 : 0);      // Colour block
+   REVK_ERR_CHECK (led_strip_refresh (strip));
+   usleep (500000);
+   show (n);
+
+   if (doneinit && webcontrol)
    {
       // Web interface
       httpd_config_t config = HTTPD_DEFAULT_CONFIG ();
@@ -277,10 +354,13 @@ app_main ()
       }
    }
 
-   while (1)
+   while (doneinit && revk_shutting_down (NULL))
    {
-      if (!gpio_get_level (BTN1) || !gpio_get_level (BTN2))
-         night ();
-      usleep (10000);
+      int p = revk_ota_progress ();
+      if (p > 0 && p < 100)
+         digits (p, 63, 63, 0);
+      sleep (1);                // Wait
    }
+
+   night (1);                   // Sleep with LEDs on
 }

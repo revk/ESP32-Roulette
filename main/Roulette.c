@@ -107,6 +107,7 @@ night (uint8_t p)
    gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
    rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
    rtc_gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
+   rtc_gpio_hold_dis (pwr & IO_MASK);
    rtc_gpio_isolate (pwr & IO_MASK);
    rtc_gpio_hold_en (pwr & IO_MASK);
    // Buttons
@@ -220,10 +221,10 @@ app_main ()
       gpio_config (&c);
    }
 
-   rtc_gpio_hold_dis (pwr & IO_MASK);
    gpio_reset_pin (pwr & IO_MASK);
    gpio_set_direction (pwr & IO_MASK, GPIO_MODE_OUTPUT);
    gpio_set_level (pwr & IO_MASK, (pwr & IO_INV) ? 0 : 1);
+   rtc_gpio_hold_dis (pwr & IO_MASK);
 
    led_strip_handle_t strip = NULL;
    led_strip_config_t strip_config = {
@@ -332,7 +333,7 @@ app_main ()
          run += N;
    }
 
-   uint8_t adj = esp_random () & 7;
+   uint8_t adj = esp_random () & 7;     // Final slow adjust
 
    while (run-- && !revk_shutting_down (NULL))
    {
@@ -348,11 +349,22 @@ app_main ()
       n = (n + ((esp_random () & 1) ? N - 1 : 1)) % N;
       show (n);
    }
-   usleep (200000);
+
+   // Flash colour
+
+   usleep (300000);
+   for (int i = N; i < LEDS; i++)
+      led_strip_set_pixel (strip, i, 0, 0, 0);
+   REVK_ERR_CHECK (led_strip_refresh (strip));
+   usleep (300000);
    for (int i = N; i < LEDS; i++)
       led_strip_set_pixel (strip, i, n & 2 ? 64 : 0, !n ? 63 : 0, n && !(n & 2) ? 64 : 0);      // Colour block
    REVK_ERR_CHECK (led_strip_refresh (strip));
-   usleep (500000);
+   usleep (300000);
+   for (int i = N; i < LEDS; i++)
+      led_strip_set_pixel (strip, i, 0, 0, 0);
+   REVK_ERR_CHECK (led_strip_refresh (strip));
+   usleep (300000);
    show (n);
 
    if (doneinit && webcontrol)

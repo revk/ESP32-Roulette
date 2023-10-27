@@ -103,30 +103,40 @@ night (uint8_t p)
 {
    if (doneinit)
       revk_pre_shutdown ();
-   ESP_LOGE (TAG, "pwr %d", (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
    // LED power
    gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
-   rtc_gpio_deinit (pwr & IO_MASK);     // Digital
    rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
    rtc_gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
    rtc_gpio_isolate (pwr & IO_MASK);
    rtc_gpio_hold_en (pwr & IO_MASK);
    // Buttons
-   rtc_gpio_deinit (btn1 & IO_MASK);    // Digital
    rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
    rtc_gpio_pullup_dis (btn1 & IO_MASK);
    rtc_gpio_pulldown_dis (btn1 & IO_MASK);
    rtc_gpio_isolate (btn1 & IO_MASK);
-   esp_sleep_enable_ext0_wakeup (btn1 & IO_MASK, btn1 & IO_INV ? 0 : 1);
-   rtc_gpio_deinit (btn2 & IO_MASK);    // Digital
    rtc_gpio_set_direction_in_sleep (btn2 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
    rtc_gpio_pullup_dis (btn2 & IO_MASK);
    rtc_gpio_pulldown_dis (btn2 & IO_MASK);
    rtc_gpio_isolate (btn2 & IO_MASK);
-   esp_sleep_enable_ext0_wakeup (btn2 & IO_MASK, btn2 & IO_INV ? 0 : 1);
+   uint64_t mask = 0;
+   if (btn1 & IO_INV)
+      mask |= (1LL << (btn1 & IO_MASK));
+   else if (btn2 & IO_INV)
+      mask |= (1LL << (btn2 & IO_MASK));
+   if (mask)
+      esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ALL_LOW);     // Active low, so one button, annoying
+   else
+   {
+      if (btn1)
+         mask |= (1LL << (btn1 & IO_MASK));
+      if (btn2)
+         mask |= (1LL << (btn2 & IO_MASK));
+      esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ANY_HIGH);    // Active high, so any button
+   }
    // Go to sleep
+   ESP_LOGE (TAG, "LED power %d (p=%d)", (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0), p);
    if (p)
-      esp_deep_sleep (10000000LL);      // LEDs on, so timed wait
+      esp_deep_sleep (10000000LL);      // LEDs on, so timed wait before turning off
    esp_deep_sleep (300000000LL);        // Sleep a while anyway
 }
 
@@ -178,9 +188,12 @@ app_main ()
    if (!btn1 || !btn2 || !pwr || !rgb || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT
        || reset == ESP_RST_PANIC)
       init ();                  // Get values
+
+   rtc_gpio_deinit (btn1 & IO_MASK);
    rtc_gpio_hold_dis (btn1 & IO_MASK);
    gpio_reset_pin (btn1 & IO_MASK);
    gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
+   rtc_gpio_deinit (btn2 & IO_MASK);
    rtc_gpio_hold_dis (btn2 & IO_MASK);
    gpio_reset_pin (btn2 & IO_MASK);
    gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
@@ -188,7 +201,7 @@ app_main ()
    ESP_LOGE (TAG, "Ext1 %llX Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", esp_sleep_get_ext1_wakeup_status (),
              reset, btn1, btn2, pwr, rgb, btnpress (btn1), btnpress (btn2));
 
-   if (!doneinit && !btnpress (btn1) && !btnpress (btn2))
+   if (!doneinit && !btnpress (btn1) && !btnpress (btn2) && !esp_sleep_get_ext1_wakeup_status ())
       night (0);                // Off, and sleep
 
    {                            // All unused input pins pull down

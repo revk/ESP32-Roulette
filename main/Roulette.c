@@ -85,7 +85,7 @@ app_callback (int client, const char *prefix, const char *target, const char *su
 {
    if (client || !prefix || target || strcmp (prefix, prefixcommand))
       return NULL;              // Not for us or not a command from main MQTT
-   return "Not known";
+   return NULL;
 }
 
 static inline uint8_t
@@ -103,31 +103,27 @@ night (uint8_t p)
 {
    if (doneinit)
       revk_pre_shutdown ();
-   gpio_set_level (pwr, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));  // Power off LEDs
-   if (p)
-      rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
+   ESP_LOGE (TAG, "pwr %d", (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
+   // LED power
+   gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
+   rtc_gpio_deinit (pwr & IO_MASK);     // Digital
+   rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
+   rtc_gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
+   rtc_gpio_isolate (pwr & IO_MASK);
+   rtc_gpio_hold_en (pwr & IO_MASK);
+   // Buttons
+   rtc_gpio_deinit (btn1 & IO_MASK);    // Digital
    rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
    rtc_gpio_pullup_dis (btn1 & IO_MASK);
    rtc_gpio_pulldown_dis (btn1 & IO_MASK);
+   rtc_gpio_isolate (btn1 & IO_MASK);
+   esp_sleep_enable_ext0_wakeup (btn1 & IO_MASK, btn1 & IO_INV ? 0 : 1);
+   rtc_gpio_deinit (btn2 & IO_MASK);    // Digital
    rtc_gpio_set_direction_in_sleep (btn2 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
    rtc_gpio_pullup_dis (btn2 & IO_MASK);
    rtc_gpio_pulldown_dis (btn2 & IO_MASK);
-   // Wait for button changes
-   uint64_t mask = 0;
-   if (btn1 & IO_INV)
-      mask |= (1LL << (btn1 & IO_MASK));
-   else if (btn2 & IO_INV)
-      mask |= (1LL << (btn2 & IO_MASK));
-   if (mask)
-      esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ALL_LOW);     // Press one button
-   else
-   {
-      if (btn1)
-         mask |= (1LL << (btn1 & IO_MASK));
-      if (btn2)
-         mask |= (1LL << (btn2 & IO_MASK));
-      esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ANY_HIGH);    // Press any button
-   }
+   rtc_gpio_isolate (btn2 & IO_MASK);
+   esp_sleep_enable_ext0_wakeup (btn2 & IO_MASK, btn2 & IO_INV ? 0 : 1);
    // Go to sleep
    if (p)
       esp_deep_sleep (10000000LL);      // LEDs on, so timed wait
@@ -177,19 +173,20 @@ init (void)
 void
 app_main ()
 {
-   esp_sleep_wakeup_cause_t wakeup = esp_sleep_get_wakeup_cause ();
    esp_reset_reason_t reset = esp_reset_reason ();
 
-   if (!btn1 || !btn2 || !pwr || !rgb || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT)
+   if (!btn1 || !btn2 || !pwr || !rgb || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT
+       || reset == ESP_RST_PANIC)
       init ();                  // Get values
-
+   rtc_gpio_hold_dis (btn1 & IO_MASK);
    gpio_reset_pin (btn1 & IO_MASK);
    gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
+   rtc_gpio_hold_dis (btn2 & IO_MASK);
    gpio_reset_pin (btn2 & IO_MASK);
    gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
 
-   ESP_LOGE (TAG, "Wake %d Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", wakeup, reset, btn1, btn2, pwr, rgb,
-             btnpress (btn1), btnpress (btn2));
+   ESP_LOGE (TAG, "Ext1 %llX Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", esp_sleep_get_ext1_wakeup_status (),
+             reset, btn1, btn2, pwr, rgb, btnpress (btn1), btnpress (btn2));
 
    if (!doneinit && !btnpress (btn1) && !btnpress (btn2))
       night (0);                // Off, and sleep
@@ -210,6 +207,7 @@ app_main ()
       gpio_config (&c);
    }
 
+   rtc_gpio_hold_dis (pwr & IO_MASK);
    gpio_reset_pin (pwr & IO_MASK);
    gpio_set_direction (pwr & IO_MASK, GPIO_MODE_OUTPUT);
    gpio_set_level (pwr & IO_MASK, (pwr & IO_INV) ? 0 : 1);
@@ -248,7 +246,9 @@ app_main ()
                else
                   led_strip_set_pixel (strip, p++, 0, 0, 0);
       }
-      if (d >= 10)
+      if (d < 0)
+         skip (11);
+      else if (d >= 10)
       {
          add (d / 10);
          skip (1);
@@ -360,12 +360,14 @@ app_main ()
    while (doneinit && revk_shutting_down (NULL))
    {
       int p = revk_ota_progress ();
-      if (p > 0 && p < 100)
+      if (p > 0 && p <= 100)
       {
-         digits (p, 63, 63, 0);
+         for (int i = 0; i < p * N / 100; i++)
+            led_strip_set_pixel (strip, i, 63, 63, 0);
+         digits (-1, 0, 0, 0);
          REVK_ERR_CHECK (led_strip_refresh (strip));
       }
-      sleep (1);                // Wait
+      usleep (100000);          // Wait
    }
 
    night (1);                   // Sleep with LEDs on

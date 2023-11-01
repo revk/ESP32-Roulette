@@ -215,8 +215,7 @@ app_main ()
    gpio_reset_pin (btn2 & IO_MASK);
    gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
 
-   ESP_LOGE (TAG, "Ext1 %llX Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", esp_sleep_get_ext1_wakeup_status (),
-             reset, btn1, btn2, pwr, rgb, btnpress (btn1), btnpress (btn2));
+   //ESP_LOGE (TAG, "Ext1 %llX Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", esp_sleep_get_ext1_wakeup_status (), reset, btn1, btn2, pwr, rgb, btnpress (btn1), btnpress (btn2));
 
    if (!doneinit && !btnpress (btn1) && !btnpress (btn2) && !esp_sleep_get_ext1_wakeup_status ())
       night (0);                // Off, and sleep

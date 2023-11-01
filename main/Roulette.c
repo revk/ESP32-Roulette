@@ -42,10 +42,20 @@ const uint8_t digit[][7] = {
 
 #define	settings	\
 	b(webcontrol)	\
+<<<<<<< HEAD
 	io(btn1,-4)	\
 	io(btn2,-5)	\
 	io(pwr,-4)	\
 	io(rgb,5)	\
+=======
+	io(btn1,-7)	\
+	io(btn2,-42)	\
+	io(pwr,-8)	\
+	io(rgb,9)	\
+	io(charge,-11)	\
+	io(adc,14)	\
+	io(adcfet,-15)	\
+>>>>>>> e31adc635401fe19c9360373905ff018f461f001
 
 #define	IO_MASK	0x3F
 #define	IO_INV	0x40

@@ -44,8 +44,8 @@ const uint8_t digit[][7] = {
 	b(webcontrol)	\
 	io(btn1,-4)	\
 	io(btn2,-5)	\
-	io(pwr,-6)	\
-	io(rgb,7)	\
+	io(pwr,-4)	\
+	io(rgb,5)	\
 
 #define	IO_MASK	0x3F
 #define	IO_INV	0x40
@@ -103,39 +103,46 @@ night (uint8_t p)
 {
    if (doneinit)
       revk_pre_shutdown ();
-   // LED power
-   gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
-   rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
-   rtc_gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
-   rtc_gpio_hold_dis (pwr & IO_MASK);
-   rtc_gpio_isolate (pwr & IO_MASK);
-   rtc_gpio_hold_en (pwr & IO_MASK);
-   // Buttons
-   rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
-   rtc_gpio_pullup_dis (btn1 & IO_MASK);
-   rtc_gpio_pulldown_dis (btn1 & IO_MASK);
-   rtc_gpio_isolate (btn1 & IO_MASK);
-   rtc_gpio_set_direction_in_sleep (btn2 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
-   rtc_gpio_pullup_dis (btn2 & IO_MASK);
-   rtc_gpio_pulldown_dis (btn2 & IO_MASK);
-   rtc_gpio_isolate (btn2 & IO_MASK);
+   if (pwr && rtc_gpio_is_valid_gpio (pwr & IO_MASK))
+   {                            // LED power
+      gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
+      rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
+      rtc_gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
+      rtc_gpio_hold_dis (pwr & IO_MASK);
+      rtc_gpio_isolate (pwr & IO_MASK);
+      rtc_gpio_hold_en (pwr & IO_MASK);
+   }
+   if (btn1 && rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
+   {                            // Buttons
+      rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
+      rtc_gpio_pullup_dis (btn1 & IO_MASK);
+      rtc_gpio_pulldown_dis (btn1 & IO_MASK);
+      rtc_gpio_isolate (btn1 & IO_MASK);
+   }
+   if (btn2 && rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
+   {
+      rtc_gpio_set_direction_in_sleep (btn2 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
+      rtc_gpio_pullup_dis (btn2 & IO_MASK);
+      rtc_gpio_pulldown_dis (btn2 & IO_MASK);
+      rtc_gpio_isolate (btn2 & IO_MASK);
+   }
    uint64_t mask = 0;
-   if (btn1 & IO_INV)
+   if ((btn1 & IO_INV) && rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
       mask |= (1LL << (btn1 & IO_MASK));
-   else if (btn2 & IO_INV)
+   else if ((btn2 & IO_INV) && rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
       mask |= (1LL << (btn2 & IO_MASK));
    if (mask)
       esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ALL_LOW);     // Active low, so one button, annoying
    else
    {
-      if (btn1)
+      if (btn1 && rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
          mask |= (1LL << (btn1 & IO_MASK));
-      if (btn2)
+      if (btn2 && rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
          mask |= (1LL << (btn2 & IO_MASK));
       esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ANY_HIGH);    // Active high, so any button
    }
    // Go to sleep
-   ESP_LOGE (TAG, "LED power %d (p=%d)", (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0), p);
+   //ESP_LOGE (TAG, "LED power %d (p=%d)", (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0), p);
    if (p)
       esp_deep_sleep (10000000LL);      // LEDs on, so timed wait before turning off
    esp_deep_sleep (300000000LL);        // Sleep a while anyway
@@ -190,12 +197,18 @@ app_main ()
        || reset == ESP_RST_PANIC)
       init ();                  // Get values
 
-   rtc_gpio_deinit (btn1 & IO_MASK);
-   rtc_gpio_hold_dis (btn1 & IO_MASK);
+   if (rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
+   {
+      rtc_gpio_deinit (btn1 & IO_MASK);
+      rtc_gpio_hold_dis (btn1 & IO_MASK);
+   }
    gpio_reset_pin (btn1 & IO_MASK);
    gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
-   rtc_gpio_deinit (btn2 & IO_MASK);
-   rtc_gpio_hold_dis (btn2 & IO_MASK);
+   if (rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
+   {
+      rtc_gpio_deinit (btn2 & IO_MASK);
+      rtc_gpio_hold_dis (btn2 & IO_MASK);
+   }
    gpio_reset_pin (btn2 & IO_MASK);
    gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
 

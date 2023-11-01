@@ -3123,7 +3123,6 @@
 
   (no_connect (at 236.855 50.8) (uuid 00471d92-c3be-4210-a23e-89264ed0f6a2))
   (no_connect (at 215.9 139.065) (uuid 0210103e-eba0-460c-a052-0187a2c44ecf))
-  (no_connect (at 174.625 107.315) (uuid 196b0c64-cccf-4ba1-82cf-1facecc23150))
   (no_connect (at 212.725 80.645) (uuid 1c785d02-1419-4bd7-8f26-5d65c105da1d))
   (no_connect (at 267.335 60.96) (uuid 1e278fef-ca17-425e-ad81-e5fd24ad60d2))
   (no_connect (at 236.855 66.04) (uuid 2060782e-3911-43b0-acd8-f17f80e8e2ea))
@@ -10851,6 +10850,36 @@
       (project "Roulette"
         (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
           (reference "D43") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:VBUS") (at 174.625 107.315 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid 738f46df-1d17-4d9a-8986-0066ee31b974)
+    (property "Reference" "#PWR043" (at 170.815 107.315 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "VBUS" (at 179.959 107.315 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 174.625 107.315 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 174.625 107.315 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 4bee7f79-e86b-4439-a1bf-522edd6de55f))
+    (instances
+      (project "Watchy"
+        (path "/03039abc-65dd-445c-a352-9e386e1f31aa"
+          (reference "#PWR043") (unit 1)
+        )
+      )
+      (project "Roulette"
+        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
+          (reference "#PWR051") (unit 1)
         )
       )
     )

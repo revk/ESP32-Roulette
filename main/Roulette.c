@@ -319,11 +319,16 @@ app_main ()
       else if (d > 100 && d < 200 && (d % 10) == 5)
       {
          if (d / 10 % 10)
+         {
             add (d / 10 % 10);
-         else
-            skip (5);
-         skip (1);
-         add (10);
+            skip (1);
+            add (10);
+         } else
+         {
+            skip (3);
+            add (10);
+            skip (3);
+         }
       } else if (d >= 10)
       {
          add (d / 10 % 10);

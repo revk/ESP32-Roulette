@@ -480,7 +480,7 @@ app_main ()
 
    uint8_t tried = 0;
    uint32_t up = uptime ();
-   while (doneinit && (revk_shutting_down (NULL) || btnpress (charge) || btnpress (btn2)) && !btnpress (btn1))
+   while (doneinit && (up || revk_shutting_down (NULL) || btnpress (charge) || btnpress (btn2)) && !btnpress (btn1))
    {                            // Charging
       if ((!charge || !up || btnpress (btn2)) && !tried && !revk_link_down ())
       {

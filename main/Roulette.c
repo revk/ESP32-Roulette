@@ -18,6 +18,7 @@ static __attribute__((unused))
 
 
      RTC_NOINIT_ATTR uint8_t n; // Current number 0-(n-1) - remembered between runs
+     RTC_NOINIT_ATTR uint8_t override;  // Override next number
 
      const uint8_t num[] =
         { 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28,
@@ -38,6 +39,7 @@ const uint8_t digit[][7] = {
    {0xF8, 0x08, 0x10, 0x20, 0x40, 0x40, 0x40},
    {0x70, 0x88, 0x88, 0x70, 0x88, 0x88, 0x70},
    {0x70, 0x88, 0x88, 0x78, 0x08, 0x10, 0x60},
+   {0x80, 0x80, 0xB8, 0x88, 0xB8, 0x20, 0x38},
 };
 
 #define	settings	\
@@ -83,11 +85,18 @@ settings
 #undef u8l
 #undef b
 #undef s
+   uint8_t overridenext = 0;
+
 const char *
 app_callback (int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp (prefix, prefixcommand))
       return NULL;              // Not for us or not a command from main MQTT
+   if (suffix && *suffix >= '0' && *suffix <= '9')
+   {
+      overridenext = atoi (suffix) ? : 100;
+      return "";
+   }
    return NULL;
 }
 
@@ -205,7 +214,11 @@ app_main ()
    esp_reset_reason_t reset = esp_reset_reason ();
 
    if (!pwr || !rgb || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT || reset == ESP_RST_PANIC)
+   {
+      override = 0;
+      n = esp_random () % N;
       init ();                  // Get values
+   }
 
    if (btn1)
    {
@@ -303,9 +316,17 @@ app_main ()
       }
       if (d < 0)
          skip (11);
-      else if (d >= 10)
+      else if (d > 100 && d < 200 && (d % 10) == 5)
       {
-         add (d / 10);
+         if (d / 10 % 10)
+            add (d / 10 % 10);
+         else
+            skip (5);
+         skip (1);
+         add (10);
+      } else if (d >= 10)
+      {
+         add (d / 10 % 10);
          skip (1);
          add (d % 10);
       } else
@@ -316,7 +337,7 @@ app_main ()
       }
    }
 
-   void show (uint8_t n)
+   void show (uint8_t n, int d)
    {
       uint8_t r = 0,
          g = 0,
@@ -347,12 +368,12 @@ app_main ()
             led_strip_set_pixel (strip, i, r, g, b);
          else
             led_strip_set_pixel (strip, i, 0, 0, 0);
-      if (n < N && !(n & 1))
-         digits (num[n / 2], r / 3, g / 3, b / 3);
+      if (d >= 0)
+         digits (d, r / 3, g / 3, b / 3);
       REVK_ERR_CHECK (led_strip_refresh (strip));
    }
 
-   show (n);
+   show (n, (n & 1) ? -1 : num[n / 2]);
 
    // Button release
    while (btnpress (btn1) || btnpress (btn2))
@@ -361,7 +382,7 @@ app_main ()
       if (btnpress (btn1) && btnpress (btn2))
          init ();
    }
-   if (btnpress (charge))
+   if (btnpress (charge) || override)
       init ();
 
    // Run the wheel
@@ -369,36 +390,65 @@ app_main ()
    uint16_t run = 0;
    {                            // Set target
       uint8_t target = 255;
-      while (target >= N)
-         target = (esp_random () & 0xFF);       // Don't to ensure no bias
+      if (override)
+      {                         // Preset target
+         ESP_LOGE (TAG, "Override %d", override);
+         target = 0;
+         int i = 0;
+         if (override > 100 && override < 200 && (override % 10) == 5)
+         {
+            for (i = 0; i < sizeof (num) && num[i] != (override / 10 % 10); i++);
+            if (i < sizeof (num))
+               target = i * 2 + 1;      // N 1/2
+         } else
+         {
+            if (override == 100)
+               override = 0;
+            for (i = 0; i < sizeof (num) && num[i] != override; i++);
+            if (i < sizeof (num))
+               target = i * 2;
+         }
+      } else
+      {                         // Random target
+         while (target >= N)
+            target = (esp_random () & 0xFF);    // Don't to ensure no bias
+      }
       run = N * 2 + target - n;
+      if (target < n)
+         run += N;
       if (esp_random () & 1)
          run += N;
+      ESP_LOGE (TAG, "Target %d(%d) run %d", target, num[target / 2], run);
    }
 
    uint8_t adj = esp_random () & 7;     // Final slow adjust
 
-   while (run-- && !revk_shutting_down (NULL))
+   while (run-- && (!doneinit || !revk_shutting_down (NULL)) && !btnpress (btn2))
    {
       n = (n + 1) % N;
-      show (n);
+      if (!run && override)
+         show (n, override);
+      else
+         show (n, (n & 1) ? -1 : num[n / 2]);
 #define	SLOW	12.43           // log max time us
 #define	FAST	 8.52           // log min time us
       usleep (exp (SLOW - (SLOW - FAST) * (run + adj) / 303));  // 303 should be max run, 
    }
+   if (btnpress (btn2))
+      init ();
 
-   if (n & 1)
+   if (!override && (n & 1))
    {                            // Rock on to digit
       usleep (200000);
       n = (n + ((esp_random () & 1) ? N - 1 : 1)) % N;
-      show (n);
+      show (n, (n & 1) ? -1 : num[n / 2]);
    }
 
    // Flash colour
 
    usleep (300000);
    for (int i = N; i < LEDS; i++)
-      led_strip_set_pixel (strip, i, 0, 0, 0);
+      led_strip_set_pixel (strip, i, 0, 0, 0);  // Off
    REVK_ERR_CHECK (led_strip_refresh (strip));
    usleep (300000);
    for (int i = N; i < LEDS; i++)
@@ -406,10 +456,12 @@ app_main ()
    REVK_ERR_CHECK (led_strip_refresh (strip));
    usleep (300000);
    for (int i = N; i < LEDS; i++)
-      led_strip_set_pixel (strip, i, 0, 0, 0);
+      led_strip_set_pixel (strip, i, 0, 0, 0);  // Off
    REVK_ERR_CHECK (led_strip_refresh (strip));
    usleep (300000);
-   show (n);
+   show (n, override ? : num[n / 2]);   // Number
+
+   override = overridenext;     // Clear
 
    if (doneinit && webcontrol)
    {
@@ -428,10 +480,11 @@ app_main ()
 
    uint8_t tried = 0;
    uint32_t up = uptime ();
-   while (doneinit && (revk_shutting_down (NULL) || btnpress (charge)) && !btnpress (btn1) && !btnpress (btn2))
+   while (doneinit && (revk_shutting_down (NULL) || btnpress (charge) || btnpress (btn2)) && !btnpress (btn1))
    {                            // Charging
-      if (!up && !tried && !revk_link_down ())
+      if ((!charge || !up || btnpress (btn2)) && !tried && !revk_link_down ())
       {
+         ESP_LOGE (TAG, "Auto upgrade");
          tried = 1;
          revk_command ("upgrade", NULL);
       }

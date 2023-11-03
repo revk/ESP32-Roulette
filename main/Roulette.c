@@ -482,7 +482,7 @@ app_main ()
    uint32_t up = uptime ();
    while (doneinit && (up || revk_shutting_down (NULL) || btnpress (charge) || btnpress (btn2)) && !btnpress (btn1))
    {                            // Charging
-      if ((!charge || !up || btnpress (btn2)) && !tried && !revk_link_down ())
+      if (!tried && !revk_link_down ())
       {
          ESP_LOGE (TAG, "Auto upgrade");
          tried = 1;

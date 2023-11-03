@@ -416,7 +416,7 @@ app_main ()
          target = 0;
          int i = 0;
          if (override == 113)
-            target = 14 * 2;    // 11¾ so land on 11 (which is 14th number)
+            target = 14 * 2 + 1;        // 11¾ so land on 11++ (which is 14th number)
          else if (override > 100 && override < 200 && (override % 10) == 5)
          {
             for (i = 0; i < sizeof (num) && num[i] != (override / 10 % 10); i++);

@@ -39,7 +39,11 @@ const uint8_t digit[][7] = {
    {0xF8, 0x08, 0x10, 0x20, 0x40, 0x40, 0x40},
    {0x70, 0x88, 0x88, 0x70, 0x88, 0x88, 0x70},
    {0x70, 0x88, 0x88, 0x78, 0x08, 0x10, 0x60},
-   {0x80, 0x80, 0xB8, 0x88, 0xB8, 0x20, 0x38},
+   {0x80, 0x80, 0xB8, 0x88, 0xB8, 0x20, 0x38},  // ½
+};
+
+const uint16_t icon[][7] = {
+   {0xAE00, 0xA200, 0xAEA0, 0xA2A0, 0xAEE0, 0xA020, 0xA020},    // 11¾
 };
 
 #define	settings	\
@@ -305,6 +309,15 @@ app_main ()
             for (int y = 0; y < 7; y++)
                led_strip_set_pixel (strip, p++, 0, 0, 0);
       }
+      void addi (uint8_t d)
+      {
+         for (int x = 0; x < 11; x++)
+            for (int y = 0; y < 7; y++)
+               if (icon[d][y] & (0x8000 >> x))
+                  led_strip_set_pixel (strip, p++, r, g, b);
+               else
+                  led_strip_set_pixel (strip, p++, 0, 0, 0);
+      }
       void add (uint8_t d)
       {
          for (int x = 0; x < 5; x++)
@@ -316,14 +329,21 @@ app_main ()
       }
       if (d < 0)
          skip (11);
+      else if (d == 113)
+         addi (0);
       else if (d > 100 && d < 200 && (d % 10) == 5)
       {
          if (d / 10 % 10)
+         {
             add (d / 10 % 10);
-         else
-            skip (5);
-         skip (1);
-         add (10);
+            skip (1);
+            add (10);
+         } else
+         {
+            skip (3);
+            add (10);
+            skip (3);
+         }
       } else if (d >= 10)
       {
          add (d / 10 % 10);
@@ -395,7 +415,9 @@ app_main ()
          ESP_LOGE (TAG, "Override %d", override);
          target = 0;
          int i = 0;
-         if (override > 100 && override < 200 && (override % 10) == 5)
+         if (override == 113)
+            target = 14 * 2 + 1;        // 11¾ so land on 11++ (which is 14th number)
+         else if (override > 100 && override < 200 && (override % 10) == 5)
          {
             for (i = 0; i < sizeof (num) && num[i] != (override / 10 % 10); i++);
             if (i < sizeof (num))

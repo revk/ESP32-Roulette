@@ -1,0 +1,7 @@
+bit	webcontrol
+gpio	pwr	-4
+gpio	rgb	5
+gpio	btn1	-7
+gpio	btn2	-8
+gpio	charge	-11
+gpio	adc	14

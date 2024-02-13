@@ -7,20 +7,36 @@ PROJECT_NAME := Roulette
 SUFFIX := $(shell components/ESP32-RevK/buildsuffix)
 export SUFFIX
 
-all:
+all:	settings.h
 	@echo Make: build/$(PROJECT_NAME)$(SUFFIX).bin
 	@idf.py build
 	@cp build/$(PROJECT_NAME).bin $(PROJECT_NAME)$(SUFFIX).bin
 	@echo Done: build/$(PROJECT_NAME)$(SUFFIX).bin
+
+beta:  
+	-git pull
+	-git submodule update --recursive
+	-git commit -a -m checkpoint
+	@make set
+	cp Roulette*.bin betarelease
+	git commit -a -m Beta
+	git push
 
 issue:  
 	-git pull
 	-git submodule update --recursive
 	-git commit -a -m checkpoint
 	@make set
+	cp Roulette*.bin betarelease
 	cp Roulette*.bin release
-	git commit -a -m release
+	git commit -a -m Release
 	git push
+
+settings.h:     components/ESP32-RevK/revk_settings settings.def components/ESP32-RevK/settings.def
+	components/ESP32-RevK/revk_settings $^
+
+components/ESP32-RevK/revk_settings: components/ESP32-RevK/revk_settings.c
+	make -C components/ESP32-RevK
 
 set:	s3
 

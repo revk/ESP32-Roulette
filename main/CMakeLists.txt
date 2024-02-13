@@ -1,4 +1,4 @@
-set (COMPONENT_SRCS "Roulette.c")
+set (COMPONENT_SRCS "Roulette.c" "../settings.c")
 set (COMPONENT_REQUIRES "ESP32-RevK" "led_strip")
 
 if("$ENV{SUFFIX}" MATCHES ".*-MT.*")

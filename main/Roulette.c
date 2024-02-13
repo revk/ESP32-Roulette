@@ -46,50 +46,7 @@ const uint16_t icon[][7] = {
    {0xAE00, 0xA200, 0xAEA0, 0xA2A0, 0xAEE0, 0xA020, 0xA020},    // 11¾
 };
 
-#define	settings	\
-	b(webcontrol)	\
-	io(btn1,-7)	\
-	io(btn2,-42)	\
-	io(pwr,-4)	\
-	io(rgb,5)	\
-	io(charge,-11)	\
-	io(adc,14)	\
-	io(adcfet,-15)	\
-
-#define	IO_MASK	0x3F
-#define	IO_INV	0x40
-
-#define u32(n,d)        uint32_t n;
-#define u32l(n,d)        uint32_t n;
-#define s8(n,d) int8_t n;
-#define s8n(n,d) int8_t n[d];
-#define u8(n,d) uint8_t n;
-#define u8r(n,d) RTC_NOINIT_ATTR uint8_t n;
-#define u16(n,d) uint16_t n;
-#define u8l(n,d) uint8_t n;
-#define b(n) uint8_t n;
-#define s(n,d) char * n;
-#define io(n,d)           RTC_NOINIT_ATTR uint8_t n;
-#ifdef  CONFIG_REVK_BLINK
-#define led(n,a,d)      extern uint8_t n[a];
-#else
-#define led(n,a,d)      uint8_t n[a];
-#endif
-settings
-#undef led
-#undef io
-#undef u32
-#undef u32l
-#undef s8
-#undef s8n
-#undef u8
-#undef u8r
-#undef u16
-#undef s8r
-#undef u8l
-#undef b
-#undef s
-   uint8_t overridenext = 0;
+uint8_t overridenext = 0;
 
 const char *
 app_callback (int client, const char *prefix, const char *target, const char *suffix, jo_t j)
@@ -104,14 +61,6 @@ app_callback (int client, const char *prefix, const char *target, const char *su
    return NULL;
 }
 
-static inline uint8_t
-btnpress (uint8_t b)
-{
-   if (!b)
-      return 0;
-   return (gpio_get_level (b & IO_MASK) ? 1 : 0) ^ (b & IO_INV ? 1 : 0);
-}
-
 static uint8_t doneinit = 0;
 
 void
@@ -119,54 +68,54 @@ night (uint8_t p)
 {
    if (doneinit)
       revk_pre_shutdown ();
-   if (pwr && rtc_gpio_is_valid_gpio (pwr & IO_MASK))
+   if (pwr.set && rtc_gpio_is_valid_gpio (pwr.num))
    {                            // LED power
-      gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
-      rtc_gpio_set_direction_in_sleep (pwr & IO_MASK, RTC_GPIO_MODE_OUTPUT_ONLY);
-      rtc_gpio_set_level (pwr & IO_MASK, (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0));
-      rtc_gpio_hold_dis (pwr & IO_MASK);
-      rtc_gpio_isolate (pwr & IO_MASK);
-      rtc_gpio_hold_en (pwr & IO_MASK);
+      gpio_set_level (pwr.num, (p ? 1 : 0) ^ (pwr.invert ? 1 : 0));
+      rtc_gpio_set_direction_in_sleep (pwr.num, RTC_GPIO_MODE_OUTPUT_ONLY);
+      rtc_gpio_set_level (pwr.num, (p ? 1 : 0) ^ (pwr.invert ? 1 : 0));
+      rtc_gpio_hold_dis (pwr.num);
+      rtc_gpio_isolate (pwr.num);
+      rtc_gpio_hold_en (pwr.num);
    }
-   if (btn1 && rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
+   if (btn1.set && rtc_gpio_is_valid_gpio (btn1.num))
    {                            // Button 1
-      rtc_gpio_set_direction_in_sleep (btn1 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
-      rtc_gpio_pullup_dis (btn1 & IO_MASK);
-      rtc_gpio_pulldown_dis (btn1 & IO_MASK);
-      rtc_gpio_isolate (btn1 & IO_MASK);
+      rtc_gpio_set_direction_in_sleep (btn1.num, RTC_GPIO_MODE_INPUT_ONLY);
+      rtc_gpio_pullup_dis (btn1.num);
+      rtc_gpio_pulldown_dis (btn1.num);
+      rtc_gpio_isolate (btn1.num);
    }
-   if (btn2 && rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
+   if (btn2.set && rtc_gpio_is_valid_gpio (btn2.num))
    {                            // Button 2
-      rtc_gpio_set_direction_in_sleep (btn2 & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
-      rtc_gpio_pullup_dis (btn2 & IO_MASK);
-      rtc_gpio_pulldown_dis (btn2 & IO_MASK);
-      rtc_gpio_isolate (btn2 & IO_MASK);
+      rtc_gpio_set_direction_in_sleep (btn2.num, RTC_GPIO_MODE_INPUT_ONLY);
+      rtc_gpio_pullup_dis (btn2.num);
+      rtc_gpio_pulldown_dis (btn2.num);
+      rtc_gpio_isolate (btn2.num);
    }
-   if (charge && rtc_gpio_is_valid_gpio (charge & IO_MASK))
+   if (charge.set && rtc_gpio_is_valid_gpio (charge.num))
    {                            // Charge
-      rtc_gpio_set_direction_in_sleep (charge & IO_MASK, RTC_GPIO_MODE_INPUT_ONLY);
-      rtc_gpio_pullup_dis (charge & IO_MASK);
-      rtc_gpio_pulldown_dis (charge & IO_MASK);
-      rtc_gpio_isolate (charge & IO_MASK);
+      rtc_gpio_set_direction_in_sleep (charge.num, RTC_GPIO_MODE_INPUT_ONLY);
+      rtc_gpio_pullup_dis (charge.num);
+      rtc_gpio_pulldown_dis (charge.num);
+      rtc_gpio_isolate (charge.num);
    }
    // TODO work out "change of state" wake, to include charge
    uint64_t mask = 0;
-   if ((btn1 & IO_INV) && rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
-      mask |= (1LL << (btn1 & IO_MASK));
-   else if ((btn2 & IO_INV) && rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
-      mask |= (1LL << (btn2 & IO_MASK));
+   if ((btn1.invert) && rtc_gpio_is_valid_gpio (btn1.num))
+      mask |= (1LL << (btn1.num));
+   else if ((btn2.invert) && rtc_gpio_is_valid_gpio (btn2.num))
+      mask |= (1LL << (btn2.num));
    if (mask)
       esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ALL_LOW);     // Active low, so one button, annoying
    else
    {
-      if (btn1 && rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
-         mask |= (1LL << (btn1 & IO_MASK));
-      if (btn2 && rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
-         mask |= (1LL << (btn2 & IO_MASK));
+      if (btn1.set && rtc_gpio_is_valid_gpio (btn1.num))
+         mask |= (1LL << (btn1.num));
+      if (btn2.set && rtc_gpio_is_valid_gpio (btn2.num))
+         mask |= (1LL << (btn2.num));
       esp_sleep_enable_ext1_wakeup (mask, ESP_EXT1_WAKEUP_ANY_HIGH);    // Active high, so any button
    }
    // Go to sleep
-   //ESP_LOGE (TAG, "LED power %d (p=%d)", (p ? 1 : 0) ^ (pwr & IO_INV ? 1 : 0), p);
+   //ESP_LOGE (TAG, "LED power %d (p=%d)", (p ? 1 : 0) ^ (pwr.invert ? 1 : 0), p);
    if (p)
       esp_deep_sleep (10000000LL);      // LEDs on, so timed wait before turning off
    esp_deep_sleep (300000000LL);        // Sleep a while anyway
@@ -180,36 +129,7 @@ init (void)
    ESP_LOGE (TAG, "Start wifi/etc");
    doneinit = 1;
    revk_boot (&app_callback);
-#ifndef CONFIG_REVK_BLINK
-#define led(n,a,d)      revk_register(#n,a,sizeof(*n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD|SETTING_FIX);
-#else
-#define led(n,a,d)
-#endif
-#define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD|SETTING_FIX);
-#define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
-#define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
-#define u32l(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_LIVE);
-#define s8(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_SIGNED);
-#define s8n(n,d) revk_register(#n,d,sizeof(*n),&n,NULL,SETTING_SIGNED);
-#define u8(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
-#define u8r(n,d) u8(n,d)
-#define u16(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
-#define u8l(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_LIVE);
-#define s(n,d) revk_register(#n,0,0,&n,#d,0);
-   settings
-#undef io
-#undef u32
-#undef u32l
-#undef s8
-#undef s8n
-#undef u8
-#undef u8r
-#undef u16
-#undef s8r
-#undef u8l
-#undef b
-#undef s
-      revk_start ();
+   revk_start ();
 }
 
 void
@@ -217,76 +137,44 @@ app_main ()
 {
    esp_reset_reason_t reset = esp_reset_reason ();
 
-   if (!pwr || !rgb || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT || reset == ESP_RST_PANIC)
+   if (!pwr.set || !rgb.set || reset == ESP_RST_POWERON || reset == ESP_RST_EXT || reset == ESP_RST_BROWNOUT || reset == ESP_RST_PANIC)
    {
       override = 0;
       n = esp_random () % N;
       init ();                  // Get values
    }
 
-   if (btn1)
-   {
-      if (rtc_gpio_is_valid_gpio (btn1 & IO_MASK))
-      {
-         rtc_gpio_deinit (btn1 & IO_MASK);
-         rtc_gpio_hold_dis (btn1 & IO_MASK);
-      }
-      gpio_reset_pin (btn1 & IO_MASK);
-      gpio_set_direction (btn1 & IO_MASK, GPIO_MODE_INPUT);
-   }
-   if (btn2)
-   {
-      if (rtc_gpio_is_valid_gpio (btn2 & IO_MASK))
-      {
-         rtc_gpio_deinit (btn2 & IO_MASK);
-         rtc_gpio_hold_dis (btn2 & IO_MASK);
-      }
-      gpio_reset_pin (btn2 & IO_MASK);
-      gpio_set_direction (btn2 & IO_MASK, GPIO_MODE_INPUT);
-   }
-   if (charge)
-   {
-      if (rtc_gpio_is_valid_gpio (charge & IO_MASK))
-      {
-         rtc_gpio_deinit (charge & IO_MASK);
-         rtc_gpio_hold_dis (charge & IO_MASK);
-      }
-      gpio_reset_pin (charge & IO_MASK);
-      gpio_set_direction (charge & IO_MASK, GPIO_MODE_INPUT);
-   }
-   //ESP_LOGE (TAG, "Ext1 %llX Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", esp_sleep_get_ext1_wakeup_status (), reset, btn1, btn2, pwr, rgb, btnpress (btn1), btnpress (btn2));
+   revk_gpio_input(btn1);
+   revk_gpio_input(btn2);
+   revk_gpio_input(charge);
+   revk_gpio_output(pwr);
 
-   if (!doneinit && !btnpress (btn1) && !btnpress (btn2) && !btnpress (charge) && !esp_sleep_get_ext1_wakeup_status ())
+   //ESP_LOGE (TAG, "Ext1 %llX Reset %d BTN1 %X BTN2 %X PWR %X RGB %X Press1 %d Press2 %d", esp_sleep_get_ext1_wakeup_status (), reset, btn1, btn2, pwr, rgb, revk_gpio_get (btn1), revk_gpio_get (btn2));
+
+   if (!doneinit && !revk_gpio_get (btn1) && !revk_gpio_get (btn2) && !revk_gpio_get (charge) && !esp_sleep_get_ext1_wakeup_status ())
       night (0);                // Off, and sleep
 
    {                            // All unused input pins pull down
       gpio_config_t c = {.pull_down_en = 1,.mode = GPIO_MODE_DISABLE };
       for (uint8_t p = 0; p <= 48; p++)
-         if (gpio_ok (p) ==3)
+         if (gpio_ok (p) == 3)
             c.pin_bit_mask |= (1LL << p);
-      if (btn1)
-         c.pin_bit_mask &= ~(1LL << (btn1 & IO_MASK));
-      if (btn2)
-         c.pin_bit_mask &= ~(1LL << (btn2 & IO_MASK));
-      if (charge)
-         c.pin_bit_mask &= ~(1LL << (charge & IO_MASK));
-      if (pwr)
-         c.pin_bit_mask &= ~(1LL << (pwr & IO_MASK));
-      if (rgb)
-         c.pin_bit_mask &= ~(1LL << (rgb & IO_MASK));
-      if (adcfet)
-         c.pin_bit_mask &= ~(1LL << (adcfet & IO_MASK));
+      if (btn1.set)
+         c.pin_bit_mask &= ~(1LL << btn1.num);
+      if (btn2.set)
+         c.pin_bit_mask &= ~(1LL << btn2.num);
+      if (charge.set)
+         c.pin_bit_mask &= ~(1LL << charge.num);
+      if (pwr.set)
+         c.pin_bit_mask &= ~(1LL << pwr.num);
+      if (rgb.set)
+         c.pin_bit_mask &= ~(1LL << rgb.num);
       gpio_config (&c);
    }
 
-   gpio_reset_pin (pwr & IO_MASK);
-   gpio_set_direction (pwr & IO_MASK, GPIO_MODE_OUTPUT);
-   gpio_set_level (pwr & IO_MASK, (pwr & IO_INV) ? 0 : 1);
-   rtc_gpio_hold_dis (pwr & IO_MASK);
-
    led_strip_handle_t strip = NULL;
    led_strip_config_t strip_config = {
-      .strip_gpio_num = rgb & IO_MASK,
+      .strip_gpio_num = rgb.num ,
       .max_leds = LEDS,         // The number of LEDs in the strip,
       .led_pixel_format = LED_PIXEL_FORMAT_GRB, // Pixel format of your LED strip
       .led_model = LED_MODEL_WS2812,    // LED strip model
@@ -396,13 +284,13 @@ app_main ()
    show (n, (n & 1) ? -1 : num[n / 2]);
 
    // Button release
-   while (btnpress (btn1) || btnpress (btn2))
+   while (revk_gpio_get (btn1) || revk_gpio_get (btn2))
    {
       usleep (10000);
-      if (btnpress (btn1) && btnpress (btn2))
+      if (revk_gpio_get (btn1) && revk_gpio_get (btn2))
          init ();
    }
-   if (btnpress (charge) || override)
+   if (revk_gpio_get (charge) || override)
       init ();
 
    // Run the wheel
@@ -445,7 +333,7 @@ app_main ()
 
    uint8_t adj = esp_random () & 7;     // Final slow adjust
 
-   while (run-- && (!doneinit || !revk_shutting_down (NULL)) && !btnpress (btn2))
+   while (run-- && (!doneinit || !revk_shutting_down (NULL)) && !revk_gpio_get (btn2))
    {
       n = (n + 1) % N;
       if (!run && override)
@@ -456,7 +344,7 @@ app_main ()
 #define	FAST	 8.52           // log min time us
       usleep (exp (SLOW - (SLOW - FAST) * (run + adj) / 303));  // 303 should be max run, 
    }
-   if (btnpress (btn2))
+   if (revk_gpio_get (btn2))
       init ();
 
    if (!override && (n & 1))
@@ -502,7 +390,7 @@ app_main ()
 
    uint8_t tried = 0;
    uint32_t up = uptime ();
-   while (doneinit && (up || revk_shutting_down (NULL) || btnpress (charge) || btnpress (btn2)) && !btnpress (btn1))
+   while (doneinit && (up || revk_shutting_down (NULL) || revk_gpio_get (charge) || revk_gpio_get (btn2)) && !revk_gpio_get (btn1))
    {                            // Charging
       if (!tried && !revk_link_down ())
       {
@@ -513,7 +401,7 @@ app_main ()
       int p = revk_ota_progress ();
       if (p > 0 && p <= 100)
       {
-         gpio_set_level (pwr & IO_MASK, pwr & IO_INV ? 0 : 1);
+	      revk_gpio_set(pwr,1);
          for (int i = 0; i < p * N / 100; i++)
             led_strip_set_pixel (strip, i, 63, 63, 0);
          digits (-1, 0, 0, 0);
@@ -522,7 +410,7 @@ app_main ()
       if (up && uptime () > up + 10)
       {                         // LED Off...
          up = 0;
-         gpio_set_level (pwr & IO_MASK, pwr & IO_INV ? 1 : 0);
+	                 revk_gpio_set(pwr,0);
       }
       usleep (10000);           // Wait
    }

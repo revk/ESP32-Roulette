@@ -1253,7 +1253,7 @@
 					(hide yes)
 				)
 			)
-			(property "LCSC Part #" "C5137770"
+			(property "MPN" "C5137770"
 				(at 0 -3.175 0)
 				(effects
 					(font
@@ -1385,7 +1385,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" ""
+			(property "Description" "ESP32S3"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1394,7 +1394,7 @@
 					(hide yes)
 				)
 			)
-			(property "LCSC Part #" "C3013941"
+			(property "MPN" "C3013941"
 				(at 0 -32.385 0)
 				(effects
 					(font
@@ -2985,17 +2985,8 @@
 					(hide yes)
 				)
 			)
-			(property "LCSC Part #" "C668215"
+			(property "MPN" "C668215"
 				(at -6.35 5.715 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "JLCPCB Rotation Offset" "180"
-				(at -8.89 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -3159,7 +3150,7 @@
 					(hide yes)
 				)
 			)
-			(property "LCSC Part #" "C3001289"
+			(property "MPN" "C3001289"
 				(at 0 0 0)
 				(effects
 					(font
@@ -3230,7 +3221,7 @@
 						(type default)
 					)
 					(fill
-						(type outline)
+						(type none)
 					)
 				)
 				(arc
@@ -3242,7 +3233,7 @@
 						(type default)
 					)
 					(fill
-						(type none)
+						(type outline)
 					)
 				)
 				(arc
@@ -3278,7 +3269,7 @@
 						(type default)
 					)
 					(fill
-						(type outline)
+						(type none)
 					)
 				)
 				(arc
@@ -3290,7 +3281,7 @@
 						(type default)
 					)
 					(fill
-						(type none)
+						(type outline)
 					)
 				)
 				(polyline
@@ -3953,7 +3944,7 @@
 					(hide yes)
 				)
 			)
-			(property "Footprint" "RevK:SMD1010"
+			(property "Footprint" ""
 				(at 1.27 -7.62 0)
 				(effects
 					(font
@@ -3982,7 +3973,7 @@
 					(hide yes)
 				)
 			)
-			(property "LCSC Part #" "C5349953"
+			(property "MPN" "C5349953"
 				(at 1.27 -11.43 0)
 				(effects
 					(font
@@ -4285,7 +4276,7 @@
 				)
 			)
 			(property "Datasheet" "http://www.farnell.com/datasheets/1835997.pdf"
-				(at 0 0 0)
+				(at 5.08 -3.81 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -4548,8 +4539,12 @@
 		)
 		(symbol "power:+3.3V"
 			(power)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 0)
+				(hide yes)
 			)
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4649,8 +4644,7 @@
 				(pin power_in line
 					(at 0 0 90)
 					(length 0)
-					(hide yes)
-					(name "+3.3V"
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4670,8 +4664,12 @@
 		)
 		(symbol "power:GND"
 			(power)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 0)
+				(hide yes)
 			)
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4747,8 +4745,7 @@
 				(pin power_in line
 					(at 0 0 270)
 					(length 0)
-					(hide yes)
-					(name "GND"
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4835,7 +4832,7 @@
 				(pin power_out line
 					(at 0 0 90)
 					(length 0)
-					(name "pwr"
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4869,8 +4866,12 @@
 		)
 		(symbol "power:VBUS"
 			(power)
+			(pin_numbers
+				(hide yes)
+			)
 			(pin_names
 				(offset 0)
+				(hide yes)
 			)
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4885,7 +4886,7 @@
 				)
 			)
 			(property "Value" "VBUS"
-				(at 0 3.81 0)
+				(at 0 3.556 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -4970,8 +4971,7 @@
 				(pin power_in line
 					(at 0 0 90)
 					(length 0)
-					(hide yes)
-					(name "VBUS"
+					(name "~"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -15739,7 +15739,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 68.2498 0)
 			(effects
 				(font
@@ -15810,7 +15810,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 62.865 0)
 			(effects
 				(font
@@ -15838,7 +15838,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 62.865 0)
 			(effects
 				(font
@@ -15894,7 +15894,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 160.147 153.67 90)
 			(effects
 				(font
@@ -15971,7 +15971,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 47.625 0)
 			(effects
 				(font
@@ -15999,7 +15999,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 47.625 0)
 			(effects
 				(font
@@ -16133,7 +16133,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 102.235 0)
 			(effects
 				(font
@@ -16161,7 +16161,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 102.235 0)
 			(effects
 				(font
@@ -16222,7 +16222,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 62.865 0)
 			(effects
 				(font
@@ -16250,7 +16250,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 62.865 0)
 			(effects
 				(font
@@ -16311,7 +16311,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 78.105 0)
 			(effects
 				(font
@@ -16339,7 +16339,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 78.105 0)
 			(effects
 				(font
@@ -16395,7 +16395,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 257.81 160.528 90)
 			(effects
 				(font
@@ -16474,7 +16474,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 42.8498 0)
 			(effects
 				(font
@@ -16541,7 +16541,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 107.315 82.2198 0)
 			(effects
 				(font
@@ -16612,7 +16612,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 102.235 0)
 			(effects
 				(font
@@ -16640,7 +16640,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 102.235 0)
 			(effects
 				(font
@@ -16701,7 +16701,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 47.625 0)
 			(effects
 				(font
@@ -16729,7 +16729,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 47.625 0)
 			(effects
 				(font
@@ -16790,7 +16790,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 70.485 0)
 			(effects
 				(font
@@ -16818,7 +16818,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 70.485 0)
 			(effects
 				(font
@@ -16879,7 +16879,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 47.625 0)
 			(effects
 				(font
@@ -16907,7 +16907,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 47.625 0)
 			(effects
 				(font
@@ -16964,7 +16964,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 81.915 23.7998 0)
 			(effects
 				(font
@@ -17035,7 +17035,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 47.625 0)
 			(effects
 				(font
@@ -17063,7 +17063,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 47.625 0)
 			(effects
 				(font
@@ -17189,7 +17189,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 51.435 0)
 			(effects
 				(font
@@ -17217,7 +17217,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 51.435 0)
 			(effects
 				(font
@@ -17278,7 +17278,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 47.625 0)
 			(effects
 				(font
@@ -17306,7 +17306,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 47.625 0)
 			(effects
 				(font
@@ -17427,7 +17427,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 93.6498 0)
 			(effects
 				(font
@@ -17498,7 +17498,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 62.865 0)
 			(effects
 				(font
@@ -17526,7 +17526,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 62.865 0)
 			(effects
 				(font
@@ -17583,7 +17583,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 80.9498 0)
 			(effects
 				(font
@@ -17724,7 +17724,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 64.135 0)
 			(effects
 				(font
@@ -17752,7 +17752,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 64.135 0)
 			(effects
 				(font
@@ -17813,7 +17813,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 140.335 0)
 			(effects
 				(font
@@ -17841,7 +17841,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 140.335 0)
 			(effects
 				(font
@@ -17898,7 +17898,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 119.0498 0)
 			(effects
 				(font
@@ -18169,7 +18169,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 32.385 0)
 			(effects
 				(font
@@ -18197,7 +18197,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 32.385 0)
 			(effects
 				(font
@@ -18254,7 +18254,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 55.5498 0)
 			(effects
 				(font
@@ -18325,7 +18325,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 62.865 0)
 			(effects
 				(font
@@ -18353,7 +18353,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 62.865 0)
 			(effects
 				(font
@@ -18414,7 +18414,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 51.435 0)
 			(effects
 				(font
@@ -18442,7 +18442,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 51.435 0)
 			(effects
 				(font
@@ -18503,7 +18503,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 32.385 0)
 			(effects
 				(font
@@ -18531,7 +18531,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 32.385 0)
 			(effects
 				(font
@@ -18663,7 +18663,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 47.625 0)
 			(effects
 				(font
@@ -18691,7 +18691,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 47.625 0)
 			(effects
 				(font
@@ -18817,7 +18817,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 114.935 0)
 			(effects
 				(font
@@ -18845,7 +18845,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 114.935 0)
 			(effects
 				(font
@@ -18906,7 +18906,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 140.335 0)
 			(effects
 				(font
@@ -18934,7 +18934,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 140.335 0)
 			(effects
 				(font
@@ -18991,7 +18991,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 196.215 23.7998 0)
 			(effects
 				(font
@@ -19058,7 +19058,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 132.715 82.2198 0)
 			(effects
 				(font
@@ -19125,7 +19125,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 69.85 42.8498 0)
 			(effects
 				(font
@@ -19196,7 +19196,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 78.105 0)
 			(effects
 				(font
@@ -19224,7 +19224,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 78.105 0)
 			(effects
 				(font
@@ -19273,7 +19273,7 @@
 				)
 			)
 		)
-		(property "Value" "~"
+		(property "Value" ""
 			(at 257.81 130.81 0)
 			(effects
 				(font
@@ -19307,7 +19307,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5137770"
+		(property "MPN" "C5137770"
 			(at 257.81 133.985 0)
 			(effects
 				(font
@@ -19357,7 +19357,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 144.4498 0)
 			(effects
 				(font
@@ -19425,7 +19425,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 249.8852 29.845 0)
 			(effects
 				(font
@@ -19498,7 +19498,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 93.6498 0)
 			(effects
 				(font
@@ -19569,7 +19569,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 38.735 0)
 			(effects
 				(font
@@ -19597,7 +19597,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 38.735 0)
 			(effects
 				(font
@@ -19646,7 +19646,7 @@
 				)
 			)
 		)
-		(property "Value" "~"
+		(property "Value" ""
 			(at 257.81 154.94 0)
 			(effects
 				(font
@@ -19680,7 +19680,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5137770"
+		(property "MPN" "C5137770"
 			(at 257.81 158.115 0)
 			(effects
 				(font
@@ -19730,7 +19730,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 68.2498 0)
 			(effects
 				(font
@@ -19936,7 +19936,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 47.625 0)
 			(effects
 				(font
@@ -19964,7 +19964,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 47.625 0)
 			(effects
 				(font
@@ -20021,7 +20021,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 69.85 30.1498 0)
 			(effects
 				(font
@@ -20092,7 +20092,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 127.635 0)
 			(effects
 				(font
@@ -20120,7 +20120,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 127.635 0)
 			(effects
 				(font
@@ -20204,24 +20204,6 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C82942"
-			(at 120.015 150.495 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" "-90"
-			(at 120.015 150.495 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "0f7b379d-8efe-427a-a5a2-d10d8b1e9494")
 		)
@@ -20282,7 +20264,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 62.865 0)
 			(effects
 				(font
@@ -20310,7 +20292,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 62.865 0)
 			(effects
 				(font
@@ -20371,7 +20353,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 47.625 0)
 			(effects
 				(font
@@ -20399,7 +20381,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 47.625 0)
 			(effects
 				(font
@@ -20596,7 +20578,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 81.28 64.135 0)
 			(effects
 				(font
@@ -20624,7 +20606,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 85.09 64.135 0)
 			(effects
 				(font
@@ -20685,7 +20667,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 70.485 0)
 			(effects
 				(font
@@ -20713,7 +20695,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 70.485 0)
 			(effects
 				(font
@@ -20774,7 +20756,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 40.005 0)
 			(effects
 				(font
@@ -20802,7 +20784,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 40.005 0)
 			(effects
 				(font
@@ -20863,7 +20845,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 78.105 0)
 			(effects
 				(font
@@ -20891,7 +20873,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 78.105 0)
 			(effects
 				(font
@@ -20948,7 +20930,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 119.0498 0)
 			(effects
 				(font
@@ -21019,7 +21001,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 76.835 0)
 			(effects
 				(font
@@ -21047,7 +21029,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 76.835 0)
 			(effects
 				(font
@@ -21104,7 +21086,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:TS-1092S-B3D2-G"
+		(property "Footprint" ""
 			(at 256.54 120.015 0)
 			(effects
 				(font
@@ -21128,15 +21110,6 @@
 				(font
 					(size 1.27 1.27)
 				)
-			)
-		)
-		(property "LCSC Part #" "C520860"
-			(at 256.54 125.095 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -21185,7 +21158,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 95.377 159.385 90)
 			(effects
 				(font
@@ -21258,7 +21231,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:TS-1092S-B3D2-G"
+		(property "Footprint" ""
 			(at 256.54 144.145 0)
 			(effects
 				(font
@@ -21282,15 +21255,6 @@
 				(font
 					(size 1.27 1.27)
 				)
-			)
-		)
-		(property "LCSC Part #" "C520860"
-			(at 256.54 149.225 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -21340,7 +21304,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 42.8498 0)
 			(effects
 				(font
@@ -21411,7 +21375,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 76.835 0)
 			(effects
 				(font
@@ -21439,7 +21403,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 76.835 0)
 			(effects
 				(font
@@ -21496,7 +21460,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 30.1498 0)
 			(effects
 				(font
@@ -21567,7 +21531,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 70.485 0)
 			(effects
 				(font
@@ -21595,7 +21559,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 70.485 0)
 			(effects
 				(font
@@ -21656,7 +21620,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 38.735 0)
 			(effects
 				(font
@@ -21684,7 +21648,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 38.735 0)
 			(effects
 				(font
@@ -21741,7 +21705,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 196.215 82.2198 0)
 			(effects
 				(font
@@ -21812,7 +21776,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 40.005 0)
 			(effects
 				(font
@@ -21840,7 +21804,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 40.005 0)
 			(effects
 				(font
@@ -21897,7 +21861,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 80.9498 0)
 			(effects
 				(font
@@ -21968,7 +21932,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 76.835 0)
 			(effects
 				(font
@@ -21996,7 +21960,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 76.835 0)
 			(effects
 				(font
@@ -22053,7 +22017,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 131.7498 0)
 			(effects
 				(font
@@ -22124,7 +22088,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 78.105 0)
 			(effects
 				(font
@@ -22152,7 +22116,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 78.105 0)
 			(effects
 				(font
@@ -22209,7 +22173,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 119.0498 0)
 			(effects
 				(font
@@ -22276,7 +22240,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 69.85 68.2498 0)
 			(effects
 				(font
@@ -22417,7 +22381,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 47.625 0)
 			(effects
 				(font
@@ -22445,7 +22409,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 47.625 0)
 			(effects
 				(font
@@ -22506,7 +22470,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 38.735 0)
 			(effects
 				(font
@@ -22534,7 +22498,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 38.735 0)
 			(effects
 				(font
@@ -22595,7 +22559,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 55.245 0)
 			(effects
 				(font
@@ -22623,7 +22587,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 55.245 0)
 			(effects
 				(font
@@ -22680,7 +22644,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 119.0498 0)
 			(effects
 				(font
@@ -22746,7 +22710,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 275.082 95.885 90)
 			(effects
 				(font
@@ -22829,7 +22793,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 55.245 0)
 			(effects
 				(font
@@ -22857,7 +22821,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 55.245 0)
 			(effects
 				(font
@@ -22942,7 +22906,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C3013941"
+		(property "MPN" "C3013941"
 			(at 252.095 104.775 0)
 			(effects
 				(font
@@ -23187,7 +23151,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 144.4498 0)
 			(effects
 				(font
@@ -23254,7 +23218,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 107.315 23.7998 0)
 			(effects
 				(font
@@ -23453,7 +23417,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 256.2352 29.845 0)
 			(effects
 				(font
@@ -23530,7 +23494,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 140.335 0)
 			(effects
 				(font
@@ -23558,7 +23522,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 140.335 0)
 			(effects
 				(font
@@ -23619,7 +23583,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 70.485 0)
 			(effects
 				(font
@@ -23647,7 +23611,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 70.485 0)
 			(effects
 				(font
@@ -23769,7 +23733,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 69.85 55.5498 0)
 			(effects
 				(font
@@ -23840,7 +23804,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 78.105 0)
 			(effects
 				(font
@@ -23868,7 +23832,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 78.105 0)
 			(effects
 				(font
@@ -23929,7 +23893,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 89.535 0)
 			(effects
 				(font
@@ -23957,7 +23921,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 89.535 0)
 			(effects
 				(font
@@ -24014,7 +23978,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 68.2498 0)
 			(effects
 				(font
@@ -24085,7 +24049,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 102.235 0)
 			(effects
 				(font
@@ -24113,7 +24077,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 102.235 0)
 			(effects
 				(font
@@ -24174,7 +24138,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 26.035 0)
 			(effects
 				(font
@@ -24202,7 +24166,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 26.035 0)
 			(effects
 				(font
@@ -24263,7 +24227,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 114.935 0)
 			(effects
 				(font
@@ -24291,7 +24255,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 114.935 0)
 			(effects
 				(font
@@ -24352,7 +24316,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 47.625 0)
 			(effects
 				(font
@@ -24380,7 +24344,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 47.625 0)
 			(effects
 				(font
@@ -24436,7 +24400,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:2-PADS"
+		(property "Footprint" ""
 			(at 108.585 109.855 0)
 			(effects
 				(font
@@ -24507,7 +24471,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 40.005 0)
 			(effects
 				(font
@@ -24535,7 +24499,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 40.005 0)
 			(effects
 				(font
@@ -24596,7 +24560,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 40.005 0)
 			(effects
 				(font
@@ -24624,7 +24588,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 40.005 0)
 			(effects
 				(font
@@ -24685,7 +24649,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 47.625 0)
 			(effects
 				(font
@@ -24713,7 +24677,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 47.625 0)
 			(effects
 				(font
@@ -24774,7 +24738,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 62.865 0)
 			(effects
 				(font
@@ -24802,7 +24766,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 62.865 0)
 			(effects
 				(font
@@ -24863,7 +24827,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 127.635 0)
 			(effects
 				(font
@@ -24891,7 +24855,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 127.635 0)
 			(effects
 				(font
@@ -24952,7 +24916,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 70.485 0)
 			(effects
 				(font
@@ -24980,7 +24944,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 70.485 0)
 			(effects
 				(font
@@ -25041,7 +25005,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 32.385 0)
 			(effects
 				(font
@@ -25069,7 +25033,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 32.385 0)
 			(effects
 				(font
@@ -25130,7 +25094,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 62.865 0)
 			(effects
 				(font
@@ -25158,7 +25122,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 62.865 0)
 			(effects
 				(font
@@ -25215,7 +25179,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 80.9498 0)
 			(effects
 				(font
@@ -25356,7 +25320,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 55.245 0)
 			(effects
 				(font
@@ -25384,7 +25348,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 55.245 0)
 			(effects
 				(font
@@ -25445,7 +25409,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 38.735 0)
 			(effects
 				(font
@@ -25473,7 +25437,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 38.735 0)
 			(effects
 				(font
@@ -25534,7 +25498,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 81.28 26.035 0)
 			(effects
 				(font
@@ -25562,7 +25526,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 85.09 26.035 0)
 			(effects
 				(font
@@ -25623,7 +25587,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 70.485 0)
 			(effects
 				(font
@@ -25651,7 +25615,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 70.485 0)
 			(effects
 				(font
@@ -25776,7 +25740,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 89.535 0)
 			(effects
 				(font
@@ -25804,7 +25768,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 89.535 0)
 			(effects
 				(font
@@ -25935,7 +25899,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 55.245 0)
 			(effects
 				(font
@@ -25963,7 +25927,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 55.245 0)
 			(effects
 				(font
@@ -26024,7 +25988,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 76.835 0)
 			(effects
 				(font
@@ -26052,7 +26016,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 76.835 0)
 			(effects
 				(font
@@ -26113,7 +26077,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 55.245 0)
 			(effects
 				(font
@@ -26141,7 +26105,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 55.245 0)
 			(effects
 				(font
@@ -26198,7 +26162,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 55.5498 0)
 			(effects
 				(font
@@ -26269,7 +26233,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 70.485 0)
 			(effects
 				(font
@@ -26297,7 +26261,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 70.485 0)
 			(effects
 				(font
@@ -26491,7 +26455,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 94.615 82.2198 0)
 			(effects
 				(font
@@ -26562,7 +26526,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 81.28 51.435 0)
 			(effects
 				(font
@@ -26590,7 +26554,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 85.09 51.435 0)
 			(effects
 				(font
@@ -26647,7 +26611,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 42.8498 0)
 			(effects
 				(font
@@ -26714,7 +26678,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 30.1498 0)
 			(effects
 				(font
@@ -26781,7 +26745,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 42.8498 0)
 			(effects
 				(font
@@ -26852,7 +26816,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 55.245 0)
 			(effects
 				(font
@@ -26880,7 +26844,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 55.245 0)
 			(effects
 				(font
@@ -26941,7 +26905,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 51.435 0)
 			(effects
 				(font
@@ -26969,7 +26933,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 51.435 0)
 			(effects
 				(font
@@ -27026,7 +26990,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 30.1498 0)
 			(effects
 				(font
@@ -27097,7 +27061,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 32.385 0)
 			(effects
 				(font
@@ -27125,7 +27089,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 32.385 0)
 			(effects
 				(font
@@ -27181,7 +27145,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:D_SOD-123"
+		(property "Footprint" ""
 			(at 100.965 155.575 0)
 			(effects
 				(font
@@ -27254,7 +27218,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 80.9498 0)
 			(effects
 				(font
@@ -27325,7 +27289,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 102.235 0)
 			(effects
 				(font
@@ -27353,7 +27317,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 102.235 0)
 			(effects
 				(font
@@ -27481,7 +27445,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 93.6498 0)
 			(effects
 				(font
@@ -27552,7 +27516,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 127.635 0)
 			(effects
 				(font
@@ -27580,7 +27544,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 127.635 0)
 			(effects
 				(font
@@ -27641,7 +27605,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 26.035 0)
 			(effects
 				(font
@@ -27669,7 +27633,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 26.035 0)
 			(effects
 				(font
@@ -27730,7 +27694,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 32.385 0)
 			(effects
 				(font
@@ -27758,7 +27722,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 32.385 0)
 			(effects
 				(font
@@ -27886,7 +27850,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 80.9498 0)
 			(effects
 				(font
@@ -28025,7 +27989,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 131.7498 0)
 			(effects
 				(font
@@ -28092,7 +28056,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 131.7498 0)
 			(effects
 				(font
@@ -28159,7 +28123,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 42.8498 0)
 			(effects
 				(font
@@ -28295,7 +28259,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 51.435 0)
 			(effects
 				(font
@@ -28323,7 +28287,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 51.435 0)
 			(effects
 				(font
@@ -28454,7 +28418,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 62.865 0)
 			(effects
 				(font
@@ -28482,7 +28446,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 62.865 0)
 			(effects
 				(font
@@ -28627,7 +28591,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 114.935 0)
 			(effects
 				(font
@@ -28655,7 +28619,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 114.935 0)
 			(effects
 				(font
@@ -28782,7 +28746,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 158.115 23.7998 0)
 			(effects
 				(font
@@ -28853,7 +28817,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 64.135 0)
 			(effects
 				(font
@@ -28881,7 +28845,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 64.135 0)
 			(effects
 				(font
@@ -28938,7 +28902,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 144.4498 0)
 			(effects
 				(font
@@ -29004,7 +28968,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 219.71 116.332 90)
 			(effects
 				(font
@@ -29085,7 +29049,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "RevK:SOT-323_SC-70"
+		(property "Footprint" ""
 			(at 141.605 112.395 0)
 			(effects
 				(font
@@ -29109,24 +29073,6 @@
 				(font
 					(size 1.27 1.27)
 				)
-			)
-		)
-		(property "Note" "Any P-Channel SOT323 that does 3.3V/0.5A"
-			(at 136.525 109.855 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part #" "C179347"
-			(at 136.525 109.855 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -29253,7 +29199,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 194.945 32.385 0)
 			(effects
 				(font
@@ -29281,7 +29227,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 198.755 32.385 0)
 			(effects
 				(font
@@ -29338,7 +29284,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 131.7498 0)
 			(effects
 				(font
@@ -29409,7 +29355,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 26.035 0)
 			(effects
 				(font
@@ -29437,7 +29383,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 26.035 0)
 			(effects
 				(font
@@ -29498,7 +29444,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 40.005 0)
 			(effects
 				(font
@@ -29526,7 +29472,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 40.005 0)
 			(effects
 				(font
@@ -29582,7 +29528,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_PH_B2B-PH-SM4-TB_1x02-1MP_P2.00mm_Vertical"
+		(property "Footprint" ""
 			(at 156.21 180.975 0)
 			(effects
 				(font
@@ -29606,15 +29552,6 @@
 				(font
 					(size 1.27 1.27)
 				)
-			)
-		)
-		(property "LCSC Part #" "C265003"
-			(at 156.21 180.975 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
 			)
 		)
 		(pin "1"
@@ -29668,7 +29605,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 55.245 0)
 			(effects
 				(font
@@ -29696,7 +29633,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 55.245 0)
 			(effects
 				(font
@@ -29757,7 +29694,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 32.385 0)
 			(effects
 				(font
@@ -29785,7 +29722,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 32.385 0)
 			(effects
 				(font
@@ -29842,7 +29779,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 183.515 82.2198 0)
 			(effects
 				(font
@@ -29984,7 +29921,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 64.135 0)
 			(effects
 				(font
@@ -30012,7 +29949,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 64.135 0)
 			(effects
 				(font
@@ -30073,7 +30010,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 81.28 38.735 0)
 			(effects
 				(font
@@ -30101,7 +30038,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 85.09 38.735 0)
 			(effects
 				(font
@@ -30230,7 +30167,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 144.4498 0)
 			(effects
 				(font
@@ -30301,7 +30238,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 127.635 0)
 			(effects
 				(font
@@ -30329,7 +30266,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 127.635 0)
 			(effects
 				(font
@@ -30460,7 +30397,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 38.735 0)
 			(effects
 				(font
@@ -30488,7 +30425,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 38.735 0)
 			(effects
 				(font
@@ -30571,7 +30508,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C3001289"
+		(property "MPN" "C3001289"
 			(at 200.66 125.73 0)
 			(effects
 				(font
@@ -30662,7 +30599,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 257.81 136.398 90)
 			(effects
 				(font
@@ -30741,7 +30678,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 106.3498 0)
 			(effects
 				(font
@@ -30812,7 +30749,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 70.485 0)
 			(effects
 				(font
@@ -30840,7 +30777,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 70.485 0)
 			(effects
 				(font
@@ -30897,7 +30834,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 106.3498 0)
 			(effects
 				(font
@@ -30968,7 +30905,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 62.865 0)
 			(effects
 				(font
@@ -30996,7 +30933,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 62.865 0)
 			(effects
 				(font
@@ -31053,7 +30990,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 132.715 23.7998 0)
 			(effects
 				(font
@@ -31124,7 +31061,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 38.735 0)
 			(effects
 				(font
@@ -31152,7 +31089,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 38.735 0)
 			(effects
 				(font
@@ -31213,7 +31150,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 64.135 0)
 			(effects
 				(font
@@ -31241,7 +31178,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 64.135 0)
 			(effects
 				(font
@@ -31298,7 +31235,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 68.2498 0)
 			(effects
 				(font
@@ -31369,7 +31306,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 70.485 0)
 			(effects
 				(font
@@ -31397,7 +31334,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 70.485 0)
 			(effects
 				(font
@@ -31454,7 +31391,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 81.915 82.2198 0)
 			(effects
 				(font
@@ -31521,7 +31458,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 120.015 82.2198 0)
 			(effects
 				(font
@@ -31592,7 +31529,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 40.005 0)
 			(effects
 				(font
@@ -31620,7 +31557,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 40.005 0)
 			(effects
 				(font
@@ -31681,7 +31618,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 32.385 0)
 			(effects
 				(font
@@ -31709,7 +31646,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 32.385 0)
 			(effects
 				(font
@@ -31766,7 +31703,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 80.9498 0)
 			(effects
 				(font
@@ -31837,7 +31774,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 40.005 0)
 			(effects
 				(font
@@ -31865,7 +31802,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 40.005 0)
 			(effects
 				(font
@@ -31926,7 +31863,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 70.485 0)
 			(effects
 				(font
@@ -31954,7 +31891,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 70.485 0)
 			(effects
 				(font
@@ -32011,7 +31948,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 106.3498 0)
 			(effects
 				(font
@@ -32082,7 +32019,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 64.135 0)
 			(effects
 				(font
@@ -32110,7 +32047,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 64.135 0)
 			(effects
 				(font
@@ -32232,7 +32169,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 55.5498 0)
 			(effects
 				(font
@@ -32299,7 +32236,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 131.7498 0)
 			(effects
 				(font
@@ -32370,7 +32307,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 64.135 0)
 			(effects
 				(font
@@ -32398,7 +32335,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 64.135 0)
 			(effects
 				(font
@@ -32592,7 +32529,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 80.9498 0)
 			(effects
 				(font
@@ -32659,7 +32596,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 106.3498 0)
 			(effects
 				(font
@@ -32860,7 +32797,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 127.635 0)
 			(effects
 				(font
@@ -32888,7 +32825,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 127.635 0)
 			(effects
 				(font
@@ -33018,7 +32955,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "RevK:C_0805"
+		(property "Footprint" ""
 			(at 135.5852 165.1 0)
 			(effects
 				(font
@@ -33095,7 +33032,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 140.335 0)
 			(effects
 				(font
@@ -33123,7 +33060,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 140.335 0)
 			(effects
 				(font
@@ -33255,7 +33192,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 55.245 0)
 			(effects
 				(font
@@ -33283,7 +33220,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 55.245 0)
 			(effects
 				(font
@@ -33344,7 +33281,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 127.635 0)
 			(effects
 				(font
@@ -33372,7 +33309,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 127.635 0)
 			(effects
 				(font
@@ -33429,7 +33366,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 170.815 82.2198 0)
 			(effects
 				(font
@@ -33561,7 +33498,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 145.415 23.7998 0)
 			(effects
 				(font
@@ -33697,7 +33634,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 140.335 0)
 			(effects
 				(font
@@ -33725,7 +33662,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 140.335 0)
 			(effects
 				(font
@@ -33782,7 +33719,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 208.915 82.2198 0)
 			(effects
 				(font
@@ -33853,7 +33790,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 114.935 0)
 			(effects
 				(font
@@ -33881,7 +33818,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 114.935 0)
 			(effects
 				(font
@@ -33942,7 +33879,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 102.235 0)
 			(effects
 				(font
@@ -33970,7 +33907,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 102.235 0)
 			(effects
 				(font
@@ -34031,7 +33968,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 89.535 0)
 			(effects
 				(font
@@ -34059,7 +33996,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 89.535 0)
 			(effects
 				(font
@@ -34190,7 +34127,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 70.485 0)
 			(effects
 				(font
@@ -34218,7 +34155,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 70.485 0)
 			(effects
 				(font
@@ -34279,7 +34216,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 51.435 0)
 			(effects
 				(font
@@ -34307,7 +34244,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 51.435 0)
 			(effects
 				(font
@@ -34364,7 +34301,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 68.2498 0)
 			(effects
 				(font
@@ -34435,7 +34372,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 106.045 78.105 0)
 			(effects
 				(font
@@ -34463,7 +34400,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 109.855 78.105 0)
 			(effects
 				(font
@@ -34524,7 +34461,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 62.865 0)
 			(effects
 				(font
@@ -34552,7 +34489,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 62.865 0)
 			(effects
 				(font
@@ -34609,7 +34546,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 119.0498 0)
 			(effects
 				(font
@@ -34676,7 +34613,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 68.2498 0)
 			(effects
 				(font
@@ -34742,7 +34679,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:3-PADS"
+		(property "Footprint" ""
 			(at 89.535 109.855 0)
 			(effects
 				(font
@@ -34816,7 +34753,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 102.235 0)
 			(effects
 				(font
@@ -34844,7 +34781,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 102.235 0)
 			(effects
 				(font
@@ -34905,7 +34842,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 156.845 78.105 0)
 			(effects
 				(font
@@ -34933,7 +34870,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 160.655 78.105 0)
 			(effects
 				(font
@@ -34990,7 +34927,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 55.5498 0)
 			(effects
 				(font
@@ -35057,7 +34994,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 120.015 23.7998 0)
 			(effects
 				(font
@@ -35126,7 +35063,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 277.8252 107.315 0)
 			(effects
 				(font
@@ -35199,7 +35136,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 30.1498 0)
 			(effects
 				(font
@@ -35331,7 +35268,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 106.3498 0)
 			(effects
 				(font
@@ -35398,7 +35335,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 119.0498 0)
 			(effects
 				(font
@@ -35469,7 +35406,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 26.035 0)
 			(effects
 				(font
@@ -35497,7 +35434,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 26.035 0)
 			(effects
 				(font
@@ -35623,7 +35560,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 26.035 0)
 			(effects
 				(font
@@ -35651,7 +35588,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 26.035 0)
 			(effects
 				(font
@@ -35707,7 +35644,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 160.147 146.05 90)
 			(effects
 				(font
@@ -35784,7 +35721,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 12.7 114.935 0)
 			(effects
 				(font
@@ -35812,7 +35749,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 16.51 114.935 0)
 			(effects
 				(font
@@ -35873,7 +35810,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 102.235 0)
 			(effects
 				(font
@@ -35901,7 +35838,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 102.235 0)
 			(effects
 				(font
@@ -35962,7 +35899,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 118.745 55.245 0)
 			(effects
 				(font
@@ -35990,7 +35927,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 122.555 55.245 0)
 			(effects
 				(font
@@ -36047,7 +35984,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 68.2498 0)
 			(effects
 				(font
@@ -36113,7 +36050,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 129.667 106.045 90)
 			(effects
 				(font
@@ -36192,7 +36129,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 42.8498 0)
 			(effects
 				(font
@@ -36259,7 +36196,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 158.115 82.2198 0)
 			(effects
 				(font
@@ -36326,7 +36263,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 144.4498 0)
 			(effects
 				(font
@@ -36397,7 +36334,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 26.035 0)
 			(effects
 				(font
@@ -36425,7 +36362,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 26.035 0)
 			(effects
 				(font
@@ -36510,17 +36447,8 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C668215"
+		(property "MPN" "C668215"
 			(at 104.14 171.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" "180"
-			(at 101.6 169.545 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -36578,7 +36506,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 131.7498 0)
 			(effects
 				(font
@@ -36649,7 +36577,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 140.335 0)
 			(effects
 				(font
@@ -36677,7 +36605,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 140.335 0)
 			(effects
 				(font
@@ -36738,7 +36666,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 32.385 0)
 			(effects
 				(font
@@ -36766,7 +36694,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 32.385 0)
 			(effects
 				(font
@@ -36827,7 +36755,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 182.245 78.105 0)
 			(effects
 				(font
@@ -36855,7 +36783,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 186.055 78.105 0)
 			(effects
 				(font
@@ -36916,7 +36844,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 140.335 0)
 			(effects
 				(font
@@ -36944,7 +36872,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 140.335 0)
 			(effects
 				(font
@@ -37076,7 +37004,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 64.135 0)
 			(effects
 				(font
@@ -37104,7 +37032,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 64.135 0)
 			(effects
 				(font
@@ -37161,7 +37089,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 119.0498 0)
 			(effects
 				(font
@@ -37232,7 +37160,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 38.735 0)
 			(effects
 				(font
@@ -37260,7 +37188,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 38.735 0)
 			(effects
 				(font
@@ -37321,7 +37249,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 51.435 0)
 			(effects
 				(font
@@ -37349,7 +37277,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 51.435 0)
 			(effects
 				(font
@@ -37410,7 +37338,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 131.445 78.105 0)
 			(effects
 				(font
@@ -37438,7 +37366,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 135.255 78.105 0)
 			(effects
 				(font
@@ -37495,7 +37423,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 42.8498 0)
 			(effects
 				(font
@@ -37562,7 +37490,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 144.4498 0)
 			(effects
 				(font
@@ -37629,7 +37557,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 170.815 23.7998 0)
 			(effects
 				(font
@@ -37764,7 +37692,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 114.935 0)
 			(effects
 				(font
@@ -37792,7 +37720,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 114.935 0)
 			(effects
 				(font
@@ -37879,24 +37807,6 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5224170"
-			(at 97.155 150.495 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "JLCPCB Rotation Offset" "180"
-			(at 97.155 150.495 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "b526e4c2-109d-4c78-a504-b6a6e894e564")
 		)
@@ -37946,7 +37856,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 219.71 113.792 90)
 			(effects
 				(font
@@ -38025,7 +37935,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 24.13 55.5498 0)
 			(effects
 				(font
@@ -38096,7 +38006,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 0.635 89.535 0)
 			(effects
 				(font
@@ -38124,7 +38034,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 4.445 89.535 0)
 			(effects
 				(font
@@ -38181,7 +38091,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 30.1498 0)
 			(effects
 				(font
@@ -38318,7 +38228,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 55.5498 0)
 			(effects
 				(font
@@ -38384,7 +38294,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:R_0402"
+		(property "Footprint" ""
 			(at 102.743 182.88 90)
 			(effects
 				(font
@@ -38461,7 +38371,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 55.245 0)
 			(effects
 				(font
@@ -38489,7 +38399,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 55.245 0)
 			(effects
 				(font
@@ -38550,7 +38460,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 93.345 40.005 0)
 			(effects
 				(font
@@ -38578,7 +38488,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 97.155 40.005 0)
 			(effects
 				(font
@@ -38639,7 +38549,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 76.835 0)
 			(effects
 				(font
@@ -38667,7 +38577,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 76.835 0)
 			(effects
 				(font
@@ -38728,7 +38638,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 89.535 0)
 			(effects
 				(font
@@ -38756,7 +38666,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 89.535 0)
 			(effects
 				(font
@@ -38817,7 +38727,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 51.435 0)
 			(effects
 				(font
@@ -38845,7 +38755,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 51.435 0)
 			(effects
 				(font
@@ -38906,7 +38816,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 89.535 0)
 			(effects
 				(font
@@ -38934,7 +38844,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 89.535 0)
 			(effects
 				(font
@@ -38991,7 +38901,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 208.915 23.7998 0)
 			(effects
 				(font
@@ -39058,7 +38968,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 30.1498 0)
 			(effects
 				(font
@@ -39129,7 +39039,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 58.42 89.535 0)
 			(effects
 				(font
@@ -39157,7 +39067,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 62.23 89.535 0)
 			(effects
 				(font
@@ -39218,7 +39128,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 78.105 0)
 			(effects
 				(font
@@ -39246,7 +39156,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 78.105 0)
 			(effects
 				(font
@@ -39307,7 +39217,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 55.245 0)
 			(effects
 				(font
@@ -39335,7 +39245,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 55.245 0)
 			(effects
 				(font
@@ -39396,7 +39306,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 144.145 78.105 0)
 			(effects
 				(font
@@ -39424,7 +39334,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 147.955 78.105 0)
 			(effects
 				(font
@@ -39481,7 +39391,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 93.6498 0)
 			(effects
 				(font
@@ -39623,7 +39533,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 76.835 0)
 			(effects
 				(font
@@ -39651,7 +39561,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 76.835 0)
 			(effects
 				(font
@@ -39776,7 +39686,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 40.005 0)
 			(effects
 				(font
@@ -39804,7 +39714,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 40.005 0)
 			(effects
 				(font
@@ -39865,7 +39775,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 32.385 0)
 			(effects
 				(font
@@ -39893,7 +39803,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 32.385 0)
 			(effects
 				(font
@@ -39950,7 +39860,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 12.7 144.4498 0)
 			(effects
 				(font
@@ -40021,7 +39931,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 46.99 114.935 0)
 			(effects
 				(font
@@ -40049,7 +39959,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 50.8 114.935 0)
 			(effects
 				(font
@@ -40110,7 +40020,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 32.385 0)
 			(effects
 				(font
@@ -40138,7 +40048,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 32.385 0)
 			(effects
 				(font
@@ -40264,7 +40174,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 169.545 40.005 0)
 			(effects
 				(font
@@ -40292,7 +40202,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 173.355 40.005 0)
 			(effects
 				(font
@@ -40349,7 +40259,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 93.6498 0)
 			(effects
 				(font
@@ -40416,7 +40326,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 106.3498 0)
 			(effects
 				(font
@@ -40487,7 +40397,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 24.13 127.635 0)
 			(effects
 				(font
@@ -40515,7 +40425,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 27.94 127.635 0)
 			(effects
 				(font
@@ -40642,7 +40552,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 145.415 82.2198 0)
 			(effects
 				(font
@@ -40709,7 +40619,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at -10.795 131.7498 0)
 			(effects
 				(font
@@ -40776,7 +40686,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 183.515 23.7998 0)
 			(effects
 				(font
@@ -40847,7 +40757,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 69.85 26.035 0)
 			(effects
 				(font
@@ -40875,7 +40785,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 73.66 26.035 0)
 			(effects
 				(font
@@ -40936,7 +40846,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 220.345 62.865 0)
 			(effects
 				(font
@@ -40964,7 +40874,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 224.155 62.865 0)
 			(effects
 				(font
@@ -41086,7 +40996,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 1.27 55.5498 0)
 			(effects
 				(font
@@ -41153,7 +41063,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 30.1498 0)
 			(effects
 				(font
@@ -41224,7 +41134,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 35.56 76.835 0)
 			(effects
 				(font
@@ -41252,7 +41162,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 39.37 76.835 0)
 			(effects
 				(font
@@ -41309,7 +41219,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 94.615 23.7998 0)
 			(effects
 				(font
@@ -41380,7 +41290,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "RevK:SMD1010"
+		(property "Footprint" ""
 			(at 207.645 40.005 0)
 			(effects
 				(font
@@ -41408,7 +41318,7 @@
 				)
 			)
 		)
-		(property "LCSC Part #" "C5349953"
+		(property "MPN" "C5349953"
 			(at 211.455 40.005 0)
 			(effects
 				(font
@@ -41465,7 +41375,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 35.56 93.6498 0)
 			(effects
 				(font
@@ -41532,7 +41442,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 58.42 106.3498 0)
 			(effects
 				(font
@@ -41599,7 +41509,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:C_0402"
+		(property "Footprint" ""
 			(at 46.99 93.6498 0)
 			(effects
 				(font
